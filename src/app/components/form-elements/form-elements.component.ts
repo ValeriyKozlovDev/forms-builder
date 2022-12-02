@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
@@ -25,5 +26,3 @@ export class FormElementsComponent {
     }
   }
 }
-
-

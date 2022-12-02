@@ -1,4 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+.text{
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.text_middle{
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.text_large{
+  font-size: 36px;
+  line-height: 44px;
+}
