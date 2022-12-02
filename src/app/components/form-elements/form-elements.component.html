@@ -1,0 +1,16 @@
+<div cdkDropListGroup>
+  <div class="container">
+    <h2>Form label</h2>
+
+    <div cdkDropList [cdkDropListData]="selectedElements" class="list" cdkDropListSortingDisabled
+      (cdkDropListDropped)="drop($event)">
+      <div class="box" *ngFor="let item of selectedElements" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div cdkDropList [cdkDropListData]="listElements" class="list" (cdkDropListDropped)="drop($event)">
+      <div class="box" *ngFor="let item of listElements" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+</div>
