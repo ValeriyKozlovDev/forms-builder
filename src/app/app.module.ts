@@ -8,11 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormElementsComponent } from './components/form-elements/form-elements.component'
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormElementsComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
