@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 
 import { Component } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -25,4 +26,8 @@ export class FormElementsComponent {
       );
     }
   }
+
+
+  items = ['Form Styles', 'Field Styles'];
+  expandedIndex = 0;
 }

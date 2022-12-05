@@ -1,9 +1,17 @@
 <div class="container">
-  <div class="row">
-    <div class="text text_middle col-md-4">Hi, user</div>
-    <div class="text text_large col-md-4">Form Builder</div>
-    <div class="col-md-4"><a>
-        <img src="assets/logout.svg" alt="logout">
-      </a></div>
-  </div>
+  <mat-grid-list cols="3" rowHeight="49px">
+    <mat-grid-tile>
+      <div class="text text_middle ">Hi, user</div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="text text_large">Form Builder</div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div>
+        <a [routerLink]="['/login']">
+          <img src="assets/logout.svg" alt="logout">
+        </a>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

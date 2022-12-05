@@ -1,9 +1,6 @@
-.container > div{
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
+
 .container{
   height: 49px;
+  width: 100%;
 }
 

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StylesComponent } from './form-styles.component';
+import { LoginComponent } from './login.component';
 
-describe('StylesComponent', () => {
-  let component: StylesComponent;
-  let fixture: ComponentFixture<StylesComponent>;
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StylesComponent]
+      declarations: [ LoginComponent ]
     })
-      .compileComponents();
+    .compileComponents();
 
-    fixture = TestBed.createComponent(StylesComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
