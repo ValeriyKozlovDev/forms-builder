@@ -1,20 +1,48 @@
 <form [formGroup]="formGroup" class="login-form" (input)="onFormChange()" (ngSubmit)="onSubmit()">
   <h2>Authorization</h2>
+  <div *ngIf="auth.error$ | async as error">{{error}}</div>
   <mat-form-field class="login-form__input-control">
     <mat-label>Login</mat-label>
-    <input matInput formControlName="login">
-    <mat-error *ngIf="formGroup.hasError('required', 'login')">Login must not be empty</mat-error>
+    <input matInput formControlName="email">
+    <mat-error *ngIf="formGroup.hasError('email', 'email') && !formGroup.hasError('required', 'email')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="formGroup.hasError('required', 'email')">
+      Email is not <strong>required</strong>
+    </mat-error>
   </mat-form-field>
-
+  <br>
+  <br>
+  <br>
+  <br>
   <mat-form-field class="login-form__input-control">
     <mat-label>Password</mat-label>
     <input matInput type="password" formControlName="password">
-    <mat-error *ngIf="formGroup.hasError('required', 'password')">Password must not be empty</mat-error>
+    <mat-error *ngIf="formGroup.hasError('minLength', 'password') && !formGroup.hasError('required', 'password')">
+      Password must have more then 6 symbols length
+    </mat-error>
+    <mat-error *ngIf="formGroup.hasError('required', 'password')">
+      Password is not <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
   <div class="login-form__input-control">
-    <button mat-raised-button color="primary" [disabled]="disabled || formGroup.invalid || !!formError">Sign in</button>
+    <button mat-raised-button color="primary" [disabled]="formGroup.invalid || !!formError || submitted">Sign
+      in</button>
 
     <mat-error *ngIf="formError">{{formError}}</mat-error>
   </div>
 </form>
+
+<h1 *ngIf="message">Work </h1>
+
+<!--
+<h1 mat-dialog-title>Hi </h1>
+<div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field appearance="fill">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button cdkFocusInitial>Ok</button>
+</div> -->

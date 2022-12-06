@@ -1,6 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { User } from './../../interfaces';
+import { AuthService } from './../../services/auth.service';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,18 +11,26 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   formGroup!: FormGroup;
-
+  submitted = false
   @Input() formError = '';
-  @Input() disabled!: boolean;
-  @Output() login = new EventEmitter();
-
-
-  constructor() { }
+  message!: string
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['loginAgain']) {
+        this.message = 'Please sign in'
+      }
+    })
+
+
     this.formGroup = new FormGroup({
-      login: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
 
@@ -29,7 +39,23 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.login.emit(this.formGroup.value);
-  }
+    if (this.formGroup.invalid) {
+      return
+    }
+    this.submitted = true
 
+    const user: User = {
+      email: this.formGroup.value.email,
+      password: this.formGroup.value.password
+    }
+    this.auth.login(user).subscribe((response) => {
+      this.formGroup.reset()
+      this.router.navigate(['/main'])
+      this.submitted = false
+    }, () => {
+      this.submitted = false
+    }
+    )
+
+  }
 }

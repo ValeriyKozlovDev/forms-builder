@@ -1,3 +1,5 @@
+import { AuthGuard } from './services/auth.guard';
+import { AuthService } from './services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 import { FormElementsComponent } from './components/form-elements/form-elements.component'
@@ -26,6 +29,7 @@ import { reducers, metaReducers } from './reducers';
 import { AppEffects } from './app.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -35,11 +39,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HeaderComponent,
     TestComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -51,13 +56,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     MatGridListModule,
     MatIconModule,
     MatSelectModule,
+    MatDialogModule,
     StoreModule.forRoot(reducers, {
       metaReducers
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([AppEffects])
+    EffectsModule.forRoot([AppEffects]),
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
