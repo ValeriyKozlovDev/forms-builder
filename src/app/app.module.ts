@@ -10,6 +10,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { FormElementsComponent } from './components/form-elements/form-elements.component'
@@ -47,6 +49,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    MatIconModule,
+    MatSelectModule,
     StoreModule.forRoot(reducers, {
       metaReducers
     }),
