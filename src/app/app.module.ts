@@ -1,7 +1,8 @@
+import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
 import { MatInputModule } from '@angular/material/input';
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode, Provider } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,8 +30,14 @@ import { reducers, metaReducers } from './reducers';
 import { AppEffects } from './app.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
+const INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  multi: true,
+  useClass: AuthInterceptor
+}
 
 @NgModule({
   declarations: [
@@ -63,7 +70,7 @@ import { HttpClientModule } from '@angular/common/http';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([AppEffects]),
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -25,6 +25,8 @@ export class LoginComponent {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
         this.message = 'Please sign in'
+      } else if (params['authFailed']) {
+        this.message = 'session is over, please sign in again'
       }
     })
 
