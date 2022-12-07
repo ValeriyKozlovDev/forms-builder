@@ -10,6 +10,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  haveAcc = true
   formGroup!: FormGroup;
   submitted = false
   @Input() formError = '';
@@ -48,14 +49,29 @@ export class LoginComponent {
       email: this.formGroup.value.email,
       password: this.formGroup.value.password
     }
+    if (this.haveAcc) {
+      this.signIn(user)
+    } else {
+      this.auth.create(user).subscribe((response) => {
+        this.signIn(user)
+      }, () => {
+        this.submitted = false
+      }
+      )
+    }
+  }
+
+  signIn(user: User) {
     this.auth.login(user).subscribe((response) => {
       this.formGroup.reset()
       this.router.navigate(['/main'])
-      this.submitted = false
     }, () => {
       this.submitted = false
     }
     )
+  }
 
+  accStatus(haveAcc: boolean) {
+    this.haveAcc = haveAcc
   }
 }
