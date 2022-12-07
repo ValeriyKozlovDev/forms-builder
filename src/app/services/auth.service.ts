@@ -33,8 +33,7 @@ export class AuthService {
     user.returnSecureToken = true
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.apiKey}`, user)
       .pipe(
-        tap((response) => console.log(response))
-
+        catchError(this.handleError.bind(this))
       )
 
   }
@@ -56,7 +55,16 @@ export class AuthService {
         this.error$.next('Wrong password')
         break
       case 'EMAIL_NOT_FOUND':
-        this.error$.next('Have not this email')
+        this.error$.next('Email not found')
+        break
+      case 'EMAIL_EXISTS':
+        this.error$.next('Email already in use')
+        break
+      case 'OPERATION_NOT_ALLOWED':
+        this.error$.next('Operation not allowed')
+        break
+      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+        this.error$.next('Too many attempts, please try later')
         break
     }
     return throwError(error)

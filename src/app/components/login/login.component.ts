@@ -53,6 +53,7 @@ export class LoginComponent {
       this.signIn(user)
     } else {
       this.auth.create(user).subscribe((response) => {
+        console.log(response)
         this.signIn(user)
       }, () => {
         this.submitted = false

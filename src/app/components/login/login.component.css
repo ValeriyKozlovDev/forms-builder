@@ -1,3 +1,46 @@
-.container{
-  padding: 50px;
+.toggle{
+  position:fixed;
+  top: 30px;
+  left: 70%;
+  border: 1px solid rgb(211, 210, 212);
+  border-radius: 12px;
+  padding: 10px;
+  background-color: rgb(238, 250, 255);
+}
+
+.toggle > span {
+  margin-right: 10px;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+
+.login-form{
+  width: 350px;
+
+}
+
+.login-form__input-control{
+  width: 100%;
+}
+.login-form__input-control{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form__title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.login-form__submit{
+  width: 150px;
 }
