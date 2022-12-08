@@ -1,14 +1,16 @@
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from './../../interfaces';
 import { AuthService } from './../../services/auth.service';
-import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class LoginComponent {
   haveAcc = true
   formGroup!: FormGroup;
@@ -29,7 +31,6 @@ export class LoginComponent {
         this.message = 'session is over, please sign in again'
       }
     })
-
 
     this.formGroup = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),

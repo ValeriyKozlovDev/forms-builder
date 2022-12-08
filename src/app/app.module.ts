@@ -27,7 +27,6 @@ import { MainComponent } from './components/main/main.component';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './store';
-import { AppEffects } from './app.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -67,7 +66,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
       metaReducers
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([AppEffects, FormEffects]),
+    EffectsModule.forRoot([FormEffects]),
   ],
   providers: [AuthService, AuthGuard, INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]

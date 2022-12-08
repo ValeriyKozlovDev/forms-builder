@@ -1,26 +1,30 @@
-import { getFields } from './../../store/form.actions';
-import { testSelector } from './../../store/form.reducer';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BorderType } from './../../interfaces';
-import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-
+import { getFields } from './../../store/form.actions';
+import { fieldsSelector } from './../../store/form.reducer';
+import { BorderType } from './../../interfaces';
 
 @Component({
   selector: 'app-form-elements',
   templateUrl: './form-elements.component.html',
-  styleUrls: ['./form-elements.component.css']
+  styleUrls: ['./form-elements.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class FormElementsComponent implements OnInit {
+
   selectedElements = ['Input label'];
   elemIndex!: number
   elem!: any
   listElements = ['Input', 'Checkbox', 'Button', 'Select'];
-  fields$ = this.store.select(testSelector)
-
+  fields$ = this.store.select(fieldsSelector)
+  value = 'Form label';
+  items = ['Form Styles', 'Field Styles'];
+  expandedIndex = 0;
+  selectedValue!: string;
 
   constructor(private store: Store) { }
-
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -38,17 +42,9 @@ export class FormElementsComponent implements OnInit {
       this.listElements = [...this.listElements.slice(0, this.elemIndex), this.elem, ...this.listElements.slice(this.elemIndex, this.listElements.length)]
     }
   }
-  value = 'Form label';
-
-
-  items = ['Form Styles', 'Field Styles'];
-  expandedIndex = 0;
-
-  selectedValue!: string;
 
   ngOnInit() {
     this.store.dispatch(getFields())
-
   }
 
   foods: BorderType[] = [
@@ -63,5 +59,4 @@ export class FormElementsComponent implements OnInit {
     { value: 'none', viewValue: 'None' },
     { value: 'hidden', viewValue: 'Hidden' },
   ];
-
 }

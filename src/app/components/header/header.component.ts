@@ -1,13 +1,12 @@
-import { testSelector } from './../../store/form.reducer';
-import { Store } from '@ngrx/store';
-import { AuthService } from './../../services/auth.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
 
@@ -17,5 +16,4 @@ export class HeaderComponent {
     this.auth.logout()
     this.router.navigate(['/'])
   }
-
 }

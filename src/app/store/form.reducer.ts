@@ -1,12 +1,11 @@
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { getStyles, getStylesSuccess, getStylesFailed, getFields, getFieldsSuccess, getFieldsFailed } from './form.actions';
 import { Styles } from '../interfaces';
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 
 export const form = 'form';
 
 export interface FormState {
   fields: string[];
-  flag: number
   fieldsLoading: boolean
   fieldsLoaded: boolean
   styles: Styles;
@@ -16,7 +15,6 @@ export interface FormState {
 
 export const initialState: FormState = {
   fields: [],
-  flag: 1,
   fieldsLoading: false,
   fieldsLoaded: false,
   styles: {
@@ -30,10 +28,7 @@ export const initialState: FormState = {
   stylesLoaded: false,
 };
 
-
 export const formReducer = createReducer(
-
-
   initialState,
   on(getStyles,
     state => ({
@@ -56,15 +51,13 @@ export const formReducer = createReducer(
   on(getFields, state => ({
     ...state,
     fieldsLoading: true,
-    fieldsLoaded: false,
-    flag: 1
+    fieldsLoaded: false
   })),
   on(getFieldsSuccess, (state, action) => ({
     ...state,
     fieldsLoading: false,
     fieldsLoaded: true,
-    fields: action.data,
-    flag: 2
+    fields: action.data
   })),
   on(getFieldsFailed, state => ({
     ...state,
@@ -74,33 +67,37 @@ export const formReducer = createReducer(
 )
 
 export const featureSelector = createFeatureSelector<FormState>(form)
-export const testSelector = createSelector(
+
+export const fieldsSelector = createSelector(
   featureSelector,
   state => state.fields
 );
 
-const select = (state: FormState) => state
-export const stylesSelector = createSelector(
-  select,
-  state => state.styles
-);
-export const stylesLoadingSelector = createSelector(
-  select,
-  state => state.stylesLoading && !state.stylesLoaded
-);
-export const stylesLoadedSelector = createSelector(
-  select,
-  state => !state.stylesLoading && state.stylesLoaded
-);
-export const fieldsSelector = createSelector(
-  select,
-  (state: FormState) => state.fields
-);
 export const fieldsLoadingSelector = createSelector(
-  select,
+  featureSelector,
   state => state.fieldsLoading && !state.fieldsLoaded
 );
+
 export const fieldsLoadedSelector = createSelector(
-  select,
+  featureSelector,
   state => !state.fieldsLoading && state.fieldsLoaded
 );
+
+export const stylesSelector = createSelector(
+  featureSelector,
+  state => state.styles
+);
+
+export const stylesLoadingSelector = createSelector(
+  featureSelector,
+  state => state.stylesLoading && !state.stylesLoaded
+);
+
+export const stylesLoadedSelector = createSelector(
+  featureSelector,
+  state => !state.stylesLoading && state.stylesLoaded
+);
+
+
+
+

@@ -1,14 +1,12 @@
-import { FormActions } from './form.actions';
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs/operators';
-import { FormService } from 'src/app/services/form.service';
 import { catchError, of } from 'rxjs';
-import { EMPTY } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { FormActions } from './form.actions';
+import { FormService } from 'src/app/services/form.service';
 
 @Injectable()
 export class FormEffects {
-
 
   getStyles$ = createEffect(() => this.actions$.pipe(
     ofType(FormActions.GetStyles),
