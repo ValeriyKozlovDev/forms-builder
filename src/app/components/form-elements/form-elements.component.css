@@ -5,8 +5,7 @@
 .wrapper {
   position: absolute;
   top: 0;
-  width: 350px;
-  max-width: 100%;
+  width: 80%;
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
@@ -81,18 +80,14 @@
 }
 
 
+.accordion__form-label{
+  width: 100%
+}
 
-
-
-
-
-
-
-
-
-
-
-
+/* .accordion__field{
+  width: 175px;
+  margin: 5px;
+} */
 
 
 

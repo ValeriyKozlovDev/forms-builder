@@ -1,3 +1,4 @@
+import { FormEffects } from './store/form.effects';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
@@ -19,14 +20,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 
 import { FormElementsComponent } from './components/form-elements/form-elements.component'
-import { TestComponent } from './components/test/test.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import { reducers, metaReducers } from './store';
 import { AppEffects } from './app.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -44,7 +44,6 @@ const INTERCEPTOR_PROVIDER: Provider = {
     AppComponent,
     FormElementsComponent,
     HeaderComponent,
-    TestComponent,
     LoginComponent,
     MainComponent,
   ],
@@ -68,7 +67,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
       metaReducers
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot([AppEffects, FormEffects]),
   ],
   providers: [AuthService, AuthGuard, INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]

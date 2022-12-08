@@ -1,3 +1,5 @@
+import { testSelector } from './../../store/form.reducer';
+import { Store } from '@ngrx/store';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
@@ -15,4 +17,5 @@ export class HeaderComponent {
     this.auth.logout()
     this.router.navigate(['/'])
   }
+
 }

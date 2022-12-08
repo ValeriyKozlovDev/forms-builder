@@ -1,32 +1,41 @@
-import { FormControl } from '@angular/forms';
-
-import { Component } from '@angular/core';
+import { getFields } from './../../store/form.actions';
+import { testSelector } from './../../store/form.reducer';
+import { Store } from '@ngrx/store';
+import { BorderType } from './../../interfaces';
+import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
-interface borderType {
-  value: string;
-  viewValue: string;
-}
+
 @Component({
   selector: 'app-form-elements',
   templateUrl: './form-elements.component.html',
   styleUrls: ['./form-elements.component.css']
 })
-export class FormElementsComponent {
+export class FormElementsComponent implements OnInit {
   selectedElements = ['Input label'];
-
+  elemIndex!: number
+  elem!: any
   listElements = ['Input', 'Checkbox', 'Button', 'Select'];
+  fields$ = this.store.select(testSelector)
+
+
+  constructor(private store: Store) { }
+
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      this.elemIndex = event.previousIndex
+      this.elem = this.listElements[this.elemIndex]
+      console.log(this.elem)
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
+      this.listElements = [...this.listElements.slice(0, this.elemIndex), this.elem, ...this.listElements.slice(this.elemIndex, this.listElements.length)]
     }
   }
   value = 'Form label';
@@ -37,7 +46,12 @@ export class FormElementsComponent {
 
   selectedValue!: string;
 
-  foods: borderType[] = [
+  ngOnInit() {
+    this.store.dispatch(getFields())
+
+  }
+
+  foods: BorderType[] = [
     { value: 'dotted', viewValue: 'Dotted' },
     { value: 'dashed', viewValue: 'Dashed' },
     { value: 'solid', viewValue: 'Solid' },
