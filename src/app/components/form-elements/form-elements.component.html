@@ -1,6 +1,6 @@
 <div cdkDropListGroup class="container">
 
-  <mat-grid-list cols="3" rowHeight="350px">
+  <mat-grid-list cols="3" rowHeight="1000px">
 
     <mat-grid-tile>
       <div class="wrapper">
@@ -30,7 +30,14 @@
                   <mat-grid-tile>
                     <mat-form-field class="accordion__field">
                       <mat-label>Text Color</mat-label>
-                      <input matInput>
+                      <mat-grid-list cols="2" rowHeight="25px">
+                        <mat-grid-tile>
+                          <input matInput>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <input type="color">
+                        </mat-grid-tile>
+                      </mat-grid-list>
                     </mat-form-field>
                   </mat-grid-tile>
                   <mat-grid-tile>
@@ -48,9 +55,11 @@
                     <mat-form-field appearance="fill">
                       <mat-label>Border type</mat-label>
                       <mat-select [(ngModel)]="selectedValue" name="food">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                          {{food.viewValue}}
-                        </mat-option>
+                        <div *ngIf="borderTypes$ | async as borderTypes">
+                          <mat-option *ngFor="let borderType of borderTypes; let i = index" [value]="borderType">
+                            {{borderType}}
+                          </mat-option>
+                        </div>
                       </mat-select>
                     </mat-form-field>
                   </mat-grid-tile>
@@ -63,9 +72,22 @@
                 </mat-grid-list>
 
               </div>
+
               <ng-template #field>
-                Field
+                <div *ngIf="styles$ | async as styles">
+                  <mat-grid-list cols="2" rowHeight="100px">
+                    <div *ngFor="let style of styles['input']; let i = index" class="accordion__styles-container">
+                      <mat-grid-tile>
+                        <mat-form-field class="accordion__styles">
+                          <mat-label>{{style}}</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </mat-grid-tile>
+                    </div>
+                  </mat-grid-list>
+                </div>
               </ng-template>
+
             </div>
           </cdk-accordion-item>
         </cdk-accordion>
@@ -73,29 +95,42 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <div class="wrapper form-label">
-        <div class="text text_middle">Form label</div>
-        <div cdkDropList [cdkDropListData]="selectedElements" class="list" (cdkDropListDropped)="drop($event)">
-          <div class="text box" *ngFor="let item of selectedElements" cdkDrag>{{item}}</div>
+      <div class="selected-form wrapper form-label">
+        <div class="text text_middle selected-form__label">Form label</div>
+        <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list"
+          (cdkDropListDropped)="drop($event)">
+          <div class="text selected-form__elems" *ngFor="let item of selectedElements; let i = index" cdkDrag>
+            <div *ngIf="item === 'input'" class="selected-form__input">
+              <input type="text" value="input">
+            </div>
+            <div *ngIf="item === 'button'" class="selected-form__button">
+              <button [ngStyle]="">button</button>
+            </div>
+            <div *ngIf="item === 'textarea'" class="selected-form__textarea">
+              <textarea name="" id="" cols="30" rows="5">textarea</textarea>
+            </div>
+            <div *ngIf="item === 'checkbox'" class="selected-form__checkbox">
+              <input type="checkbox" id=`check{{i}}` value="option">
+              <label for=`check{{i}}`>option</label>
+            </div>
+            <div *ngIf="item === 'select'" class="selected-form__select">
+              <select>Select</select>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="save-form"><button class="save-form__button">Save form</button></div>
+      <div class="save-form"><button mat-raised-button class="save-form__button">Save form</button></div>
 
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <div class="wrapper">
+      <div *ngIf="fields$ | async as fields" class="wrapper">
         <div cdkDropList [cdkDropListData]="listElements" cdkDropListSortingDisabled class="list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngIf="fields$ | async as fields">
-            <div class="text box" *ngFor="let field of fields" cdkDrag>{{field}}</div>
-          </div>
+          <div class="text box" *ngFor="let field of fields; let i = index" cdkDrag>{{field[0].toUpperCase() +
+            field.slice(1)}}</div>
         </div>
-
       </div>
-
     </mat-grid-tile>
-
   </mat-grid-list>
-
 </div>

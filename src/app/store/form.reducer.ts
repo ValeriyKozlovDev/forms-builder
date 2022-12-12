@@ -1,5 +1,5 @@
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { getStyles, getStylesSuccess, getStylesFailed, getFields, getFieldsSuccess, getFieldsFailed } from './form.actions';
+import { getStyles, getStylesSuccess, getStylesFailed, getFields, getFieldsSuccess, getFieldsFailed, getBorderTypes, getBorderTypesSuccess, getBorderTypesFailed } from './form.actions';
 import { Styles } from '../interfaces';
 
 export const form = 'form';
@@ -11,6 +11,9 @@ export interface FormState {
   styles: Styles;
   stylesLoading: boolean
   stylesLoaded: boolean
+  borderTypes: string[],
+  borderTypesLoading: boolean,
+  borderTypesLoaded: boolean
 }
 
 export const initialState: FormState = {
@@ -26,6 +29,9 @@ export const initialState: FormState = {
   },
   stylesLoading: false,
   stylesLoaded: false,
+  borderTypes: [],
+  borderTypesLoading: false,
+  borderTypesLoaded: false
 };
 
 export const formReducer = createReducer(
@@ -64,6 +70,22 @@ export const formReducer = createReducer(
     fieldsLoading: false,
     fieldsLoaded: false
   })),
+  on(getBorderTypes, state => ({
+    ...state,
+    borderTypesLoading: true,
+    borderTypesLoaded: false
+  })),
+  on(getBorderTypesSuccess, (state, action) => ({
+    ...state,
+    borderTypesLoading: false,
+    borderTypesLoaded: true,
+    borderTypes: action.data
+  })),
+  on(getBorderTypesFailed, state => ({
+    ...state,
+    borderTypesLoading: false,
+    borderTypesLoaded: false
+  })),
 )
 
 export const featureSelector = createFeatureSelector<FormState>(form)
@@ -96,6 +118,21 @@ export const stylesLoadingSelector = createSelector(
 export const stylesLoadedSelector = createSelector(
   featureSelector,
   state => !state.stylesLoading && state.stylesLoaded
+);
+
+export const borderTypesSelector = createSelector(
+  featureSelector,
+  state => state.borderTypes
+);
+
+export const borderTypesLoadingSelector = createSelector(
+  featureSelector,
+  state => state.borderTypesLoading && !state.borderTypesLoaded
+);
+
+export const borderTypesLoadedSelector = createSelector(
+  featureSelector,
+  state => !state.borderTypesLoading && state.borderTypesLoaded
 );
 
 

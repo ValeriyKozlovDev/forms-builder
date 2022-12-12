@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { getFields } from './../../store/form.actions';
-import { fieldsSelector } from './../../store/form.reducer';
-import { BorderType } from './../../interfaces';
+import { getFields, getStyles, getBorderTypes } from './../../store/form.actions';
+import { fieldsSelector, stylesSelector, borderTypesSelector } from './../../store/form.reducer';
+import { switchMap, tap, ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-form-elements',
@@ -12,17 +13,22 @@ import { BorderType } from './../../interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class FormElementsComponent implements OnInit {
+export class FormElementsComponent implements OnInit, OnDestroy {
 
-  selectedElements = ['Input label'];
+  selectedElements = ['input'];
   elemIndex!: number
-  elem!: any
-  listElements = ['Input', 'Checkbox', 'Button', 'Select'];
-  fields$ = this.store.select(fieldsSelector)
+  elem = 'input'
+  listElements = ['input', 'textarea', 'button', 'checkbox', 'select'];
   value = 'Form label';
   items = ['Form Styles', 'Field Styles'];
-  expandedIndex = 0;
   selectedValue!: string;
+  // example = { "width": "500px" }
+
+
+  fields$ = this.store.select(fieldsSelector)
+  styles$ = this.store.select(stylesSelector)
+  borderTypes$ = this.store.select(borderTypesSelector)
+  destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(private store: Store) { }
 
@@ -32,31 +38,36 @@ export class FormElementsComponent implements OnInit {
     } else {
       this.elemIndex = event.previousIndex
       this.elem = this.listElements[this.elemIndex]
-      console.log(this.elem)
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
-      this.listElements = [...this.listElements.slice(0, this.elemIndex), this.elem, ...this.listElements.slice(this.elemIndex, this.listElements.length)]
+      if (this.listElements.length === 4) {
+        this.listElements = [...this.listElements.slice(0, this.elemIndex), this.elem, ...this.listElements.slice(this.elemIndex, this.listElements.length)]
+      }
+      if (this.listElements.length === 6) {
+        this.listElements = [...this.listElements.slice(0, this.elemIndex), ...this.listElements.slice(this.elemIndex + 1, this.listElements.length)]
+      }
     }
   }
 
   ngOnInit() {
     this.store.dispatch(getFields())
+    this.store.dispatch(getStyles())
+    this.store.dispatch(getBorderTypes())
+
+    this.fields$
+      .pipe(
+        tap((item) => this.listElements = item),
+        takeUntil(this.destroy),
+        map((fields) => JSON.parse(JSON.stringify(fields)))
+      )
   }
 
-  foods: BorderType[] = [
-    { value: 'dotted', viewValue: 'Dotted' },
-    { value: 'dashed', viewValue: 'Dashed' },
-    { value: 'solid', viewValue: 'Solid' },
-    { value: 'double', viewValue: 'Double' },
-    { value: 'groove', viewValue: 'Groove' },
-    { value: 'ridge', viewValue: 'Ridge' },
-    { value: 'inset', viewValue: 'Inset' },
-    { value: 'outset', viewValue: 'Outset' },
-    { value: 'none', viewValue: 'None' },
-    { value: 'hidden', viewValue: 'Hidden' },
-  ];
+  ngOnDestroy() {
+    this.destroy.next(null);
+    this.destroy.complete();
+  }
 }

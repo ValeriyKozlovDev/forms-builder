@@ -1,5 +1,7 @@
 .container{
   position: relative;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .wrapper {
@@ -9,6 +11,37 @@
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
+}
+
+
+.selected-form__label{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px
+}
+
+.selected-form__input > input{
+  width: 100%;
+  height: 30px;
+}
+.selected-form__textarea > textarea{
+  width: 100%;
+  height: 50px;
+}
+
+.selected-form__button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected-form__button > button{
+  width: 100px;
+  height: 20px;
+}
+
+.selected-form__elems{
+  margin: 25px 0px
 }
 
 .list {
@@ -62,7 +95,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px
 }
 
 .save-form__button{
@@ -79,11 +111,9 @@
   padding: 20px;
 }
 
-
 .accordion__form-label{
   width: 100%
 }
-
 
 .accordion {
   display: block;
@@ -133,3 +163,4 @@
 .styles{
   width: 350px;
 }
+

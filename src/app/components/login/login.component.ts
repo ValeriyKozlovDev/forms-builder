@@ -1,8 +1,9 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from './../../interfaces';
 import { AuthService } from './../../services/auth.service';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,25 @@ import { AuthService } from './../../services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   haveAcc = true
   formGroup!: FormGroup;
   submitted = false
   @Input() formError = '';
   message!: string
+
+
   constructor(
     public auth: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
 
+  destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params: Params) => {
       if (params['loginAgain']) {
         this.message = 'Please sign in'
       } else if (params['authFailed']) {
@@ -55,8 +61,7 @@ export class LoginComponent {
     if (this.haveAcc) {
       this.signIn(user)
     } else {
-      this.auth.create(user).subscribe((response) => {
-        console.log(response)
+      this.auth.create(user).pipe(takeUntil(this.destroy)).subscribe((response) => {
         this.signIn(user)
       }, () => {
         this.submitted = false
@@ -66,7 +71,7 @@ export class LoginComponent {
   }
 
   signIn(user: User) {
-    this.auth.login(user).subscribe((response) => {
+    this.auth.login(user).pipe(takeUntil(this.destroy)).subscribe((response) => {
       this.formGroup.reset()
       this.router.navigate(['/main'])
     }, () => {
@@ -77,5 +82,10 @@ export class LoginComponent {
 
   accStatus(haveAcc: boolean) {
     this.haveAcc = haveAcc
+  }
+
+  ngOnDestroy() {
+    this.destroy.next(null);
+    this.destroy.complete();
   }
 }

@@ -26,6 +26,15 @@ export class FormEffects {
       ))
   ))
 
+  getBorderTypes$ = createEffect(() => this.actions$.pipe(
+    ofType(FormActions.GetBorderTypes),
+    mergeMap(() => this.formService.getBorderTypes()
+      .pipe(
+        map(borderTypes => ({ type: FormActions.GetBorderTypesSuccess, data: borderTypes })),
+        catchError(() => of({ type: FormActions.GetBorderTypesFailed, err: 'err' }))
+      ))
+  ))
+
   constructor(
     private actions$: Actions,
     private formService: FormService

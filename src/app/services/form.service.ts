@@ -23,12 +23,27 @@ export class FormService {
   getFields(): Observable<string[]> {
     return this.http.get<string[]>(`http://localhost:3000/fields`)
       .pipe(
-        tap(request => console.log('request', request)),
         catchError(error => {
           return throwError(error)
         })
       )
   }
 
+  getBorderTypes(): Observable<string[]> {
+    return this.http.get<string[]>(`http://localhost:3000/borderTypes`)
+      .pipe(
+        catchError(error => {
+          return throwError(error)
+        })
+      )
+  }
 
+  saveForm(form: any): Observable<string[]> {
+    return this.http.post<any>(`http://localhost:3000/savedForms`, [...form])
+      .pipe(
+        catchError(error => {
+          return throwError(error)
+        })
+      )
+  }
 }
