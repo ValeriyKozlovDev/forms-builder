@@ -18,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+
 
 
 import { FormElementsComponent } from './components/form-elements/form-elements.component'
@@ -31,6 +33,8 @@ import { reducers, metaReducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ListElementsComponent } from './components/list-elements/list-elements.component';
+import { FormStylesComponent } from './components/form-styles/form-styles.component';
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -46,6 +50,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     HeaderComponent,
     LoginComponent,
     MainComponent,
+    ListElementsComponent,
+    FormStylesComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +70,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MatSelectModule,
     MatDialogModule,
     MatDividerModule,
+    MatCardModule,
     StoreModule.forRoot(reducers, {
       metaReducers
     }),

@@ -1,0 +1,8 @@
+<div class="wrapper">
+  <div cdkDropList [cdkDropListData]="listElements" cdkDropListSortingDisabled class="list"
+    (cdkDropListDropped)="drop($event)">
+    <div class="text box" *ngFor="let field of listElements; let i = index" cdkDrag>{{field[0].toUpperCase() +
+      field.slice(1)}}</div>
+  </div>
+  <button>console</button>
+</div>

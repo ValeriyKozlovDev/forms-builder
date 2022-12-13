@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { catchError, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { catchError, of, switchMap } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { FormActions } from './form.actions';
 import { FormService } from 'src/app/services/form.service';
@@ -10,7 +10,7 @@ export class FormEffects {
 
   getStyles$ = createEffect(() => this.actions$.pipe(
     ofType(FormActions.GetStyles),
-    mergeMap(() => this.formService.getStyles()
+    switchMap(() => this.formService.getStyles()
       .pipe(
         map(styles => ({ type: FormActions.GetStylesSuccess, data: styles })),
         catchError(() => of({ type: FormActions.GetStylesFailed, err: 'err' }))
@@ -19,7 +19,7 @@ export class FormEffects {
 
   getFields$ = createEffect(() => this.actions$.pipe(
     ofType(FormActions.GetFields),
-    mergeMap(() => this.formService.getFields()
+    switchMap(() => this.formService.getFields()
       .pipe(
         map(fields => ({ type: FormActions.GetFieldsSuccess, data: fields })),
         catchError(() => of({ type: FormActions.GetFieldsFailed, err: 'err' }))
@@ -28,7 +28,7 @@ export class FormEffects {
 
   getBorderTypes$ = createEffect(() => this.actions$.pipe(
     ofType(FormActions.GetBorderTypes),
-    mergeMap(() => this.formService.getBorderTypes()
+    switchMap(() => this.formService.getBorderTypes()
       .pipe(
         map(borderTypes => ({ type: FormActions.GetBorderTypesSuccess, data: borderTypes })),
         catchError(() => of({ type: FormActions.GetBorderTypesFailed, err: 'err' }))

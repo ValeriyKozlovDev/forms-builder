@@ -11,6 +11,13 @@
         <h1 *ngIf="haveAcc===true">Authorization</h1>
         <h1 *ngIf="haveAcc===false">Create Account</h1>
       </div>
+      <div class="form__warning">
+        <mat-card *ngIf="loginAgain$ | async">
+          <mat-card-content>
+            Please login to your account to get to the form-builder page
+          </mat-card-content>
+        </mat-card>
+      </div>
       <mat-error *ngIf="auth.error$ | async as error">{{error}}</mat-error>
       <mat-form-field class="login-form__input-control">
         <mat-label>Login</mat-label>
@@ -44,6 +51,5 @@
         <mat-error *ngIf="formError">{{formError}}</mat-error>
       </div>
     </form>
-    <h1 *ngIf="message">Work </h1>
   </div>
 </div>

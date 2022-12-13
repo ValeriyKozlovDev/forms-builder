@@ -7,7 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'main', component: MainComponent, canActivate: [AuthGuard] },
+  { path: 'main', component: MainComponent },
 ];
 
 @NgModule({
@@ -16,3 +16,4 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule { }
+// , canActivate: [AuthGuard]

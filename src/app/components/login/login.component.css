@@ -44,3 +44,8 @@
 .login-form__submit{
   width: 150px;
 }
+
+.form__warning{
+  margin-bottom: 20px;
+  color: red;
+}

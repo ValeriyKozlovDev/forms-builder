@@ -1,3 +1,5 @@
+import { loginAgainSelector } from './../../store/auth.reducer';
+import { Store } from '@ngrx/store';
 import { Component, Input, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -20,10 +22,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   message!: string
 
 
+  loginAgain$ = this.store.select(loginAgainSelector)
+
   constructor(
     public auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store
   ) { }
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -31,9 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params: Params) => {
-      if (params['loginAgain']) {
-        this.message = 'Please sign in'
-      } else if (params['authFailed']) {
+      if (params['authFailed']) {
         this.message = 'session is over, please sign in again'
       }
     })
