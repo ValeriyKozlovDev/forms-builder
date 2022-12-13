@@ -1,6 +1,7 @@
 <div class="selected-form wrapper form-label">
   <div class="text text_middle selected-form__label">Form label</div>
-  <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list" (cdkDropListDropped)="drop($event)">
+  <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list" cdkDropListDisabled
+    (cdkDropListDropped)="drop($event)">
     <div class="text selected-form__elems" *ngFor="let item of selectedElements; let i = index" cdkDrag>
       <div *ngIf="item === 'input'" class="selected-form__input">
         <input type="text" value="input">

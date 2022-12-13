@@ -54,12 +54,8 @@ export class MainComponent {
       if (this.listElements.length === 4) {
 
         this.listElements = [...this.listElements.slice(0, this.elemIndex), this.elem, ...this.listElements.slice(this.elemIndex, this.listElements.length)]
-        console.log('111111')
+        console.log('4 elements', this.listElements)
 
-      }
-      if (this.listElements.length === 6) {
-        this.listElements = [...this.listElements.slice(0, this.elemIndex), ...this.listElements.slice(this.elemIndex + 1, this.listElements.length)]
-        console.log('222222')
       }
     }
   }
