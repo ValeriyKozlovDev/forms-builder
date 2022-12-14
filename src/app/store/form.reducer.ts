@@ -1,59 +1,40 @@
+import { Field, FormStyles } from './../interfaces';
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { getStyles, getStylesSuccess, getStylesFailed, getFields, getFieldsSuccess, getFieldsFailed, getBorderTypes, getBorderTypesSuccess, getBorderTypesFailed } from './form.actions';
-import { Styles } from '../interfaces';
+import { getFields, getFieldsSuccess, getFieldsFailed, getBorderTypes, getBorderTypesSuccess, getBorderTypesFailed, selectStyles, applyFormStyles } from './form.actions';
 
 export const form = 'form';
 
 export interface FormState {
-  fields: string[];
+  fields: Field[];
   fieldsLoading: boolean
   fieldsLoaded: boolean
-  styles: Styles;
-  stylesLoading: boolean
-  stylesLoaded: boolean
   borderTypes: string[],
   borderTypesLoading: boolean,
-  borderTypesLoaded: boolean
+  borderTypesLoaded: boolean,
+  selectedStyles: string[],
+  formStyles: FormStyles
 }
 
 export const initialState: FormState = {
   fields: [],
   fieldsLoading: false,
   fieldsLoaded: false,
-  styles: {
-    input: [],
-    textarea: [],
-    button: [],
-    checkbox: [],
-    select: []
-  },
-  stylesLoading: false,
-  stylesLoaded: false,
   borderTypes: [],
   borderTypesLoading: false,
-  borderTypesLoaded: false
+  borderTypesLoaded: false,
+  selectedStyles: [],
+  formStyles: {
+    label: '',
+    textColor: '',
+    backgroundColor: '',
+    borderColor: '',
+    borderType: ''
+  }
 };
 
 export const formReducer = createReducer(
   initialState,
-  on(getStyles,
-    state => ({
-      ...state,
-      stylesLoading: true,
-      stylesLoaded: false
-    }),
-  ),
-  on(getStylesSuccess, (state, action) => ({
-    ...state,
-    stylesLoading: false,
-    stylesLoaded: true,
-    styles: { ...action.data }
-  })),
-  on(getStylesFailed, (state, action) => ({
-    ...state,
-    stylesLoading: false,
-    stylesLoaded: false,
-  })),
+
   on(getFields, state => ({
     ...state,
     fieldsLoading: true,
@@ -86,6 +67,14 @@ export const formReducer = createReducer(
     borderTypesLoading: false,
     borderTypesLoaded: false
   })),
+  on(selectStyles, (state, action) => ({
+    ...state,
+    selectedStyles: action.data
+  })),
+  on(applyFormStyles, (state, action) => ({
+    ...state,
+    formStyles: { ...action.data }
+  })),
 )
 
 export const featureSelector = createFeatureSelector<FormState>(form)
@@ -105,21 +94,6 @@ export const fieldsLoadedSelector = createSelector(
   state => !state.fieldsLoading && state.fieldsLoaded
 );
 
-export const stylesSelector = createSelector(
-  featureSelector,
-  state => state.styles
-);
-
-export const stylesLoadingSelector = createSelector(
-  featureSelector,
-  state => state.stylesLoading && !state.stylesLoaded
-);
-
-export const stylesLoadedSelector = createSelector(
-  featureSelector,
-  state => !state.stylesLoading && state.stylesLoaded
-);
-
 export const borderTypesSelector = createSelector(
   featureSelector,
   state => state.borderTypes
@@ -134,6 +108,17 @@ export const borderTypesLoadedSelector = createSelector(
   featureSelector,
   state => !state.borderTypesLoading && state.borderTypesLoaded
 );
+
+export const selectedStylesSelector = createSelector(
+  featureSelector,
+  state => state.selectedStyles
+);
+
+export const formStylesSelector = createSelector(
+  featureSelector,
+  state => state.formStyles
+);
+
 
 
 

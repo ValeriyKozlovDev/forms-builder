@@ -1,6 +1,5 @@
 import { changeFlag } from './auth.action';
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { Styles } from '../interfaces';
 
 export const auth = 'auth';
 

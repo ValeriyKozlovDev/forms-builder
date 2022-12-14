@@ -1,22 +1,22 @@
-<div class="selected-form wrapper form-label">
-  <div class="text text_middle selected-form__label">Form label</div>
+<div [ngStyle]="formattedStyles" class="selected-form wrapper form-label">
+  <div class="text text_middle selected-form__label">{{labelName}}</div>
   <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list" cdkDropListDisabled
     (cdkDropListDropped)="drop($event)">
     <div class="text selected-form__elems" *ngFor="let item of selectedElements; let i = index" cdkDrag>
-      <div *ngIf="item === 'input'" class="selected-form__input">
+      <div *ngIf="item === 'input'" class="selected-form__input" (click)="(selectElement('input'))">
         <input type="text" value="input">
       </div>
-      <div *ngIf="item === 'button'" class="selected-form__button">
+      <div *ngIf="item === 'button'" class="selected-form__button" (click)="(selectElement('button'))">
         <button [ngStyle]="">button</button>
       </div>
-      <div *ngIf="item === 'textarea'" class="selected-form__textarea">
+      <div *ngIf="item === 'textarea'" class="selected-form__textarea" (click)="(selectElement('textarea'))">
         <textarea name="" id="" cols="30" rows="5">textarea</textarea>
       </div>
-      <div *ngIf="item === 'checkbox'" class="selected-form__checkbox">
+      <div *ngIf="item === 'checkbox'" class="selected-form__checkbox" (click)="(selectElement('checkbox'))">
         <input type="checkbox" id=`check{{i}}` value="option">
         <label for=`check{{i}}`>option</label>
       </div>
-      <div *ngIf="item === 'select'" class="selected-form__select">
+      <div *ngIf="item === 'select'" class="selected-form__select" (click)="(selectElement('select'))">
         <select>Select</select>
       </div>
     </div>

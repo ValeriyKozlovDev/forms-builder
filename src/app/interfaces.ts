@@ -14,10 +14,16 @@ export interface BorderType {
   viewValue: string;
 }
 
-export interface Styles {
-  input: string[]
-  textarea: string[]
-  button: string[]
-  checkbox: string[]
-  select: string[]
+export interface Field {
+  id: number
+  type: string
+  styles: string[]
+}
+
+export interface FormStyles {
+  label: string,
+  textColor: string,
+  backgroundColor: string,
+  borderColor: string,
+  borderType: string
 }

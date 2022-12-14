@@ -8,14 +8,6 @@ import { FormService } from 'src/app/services/form.service';
 @Injectable()
 export class FormEffects {
 
-  getStyles$ = createEffect(() => this.actions$.pipe(
-    ofType(FormActions.GetStyles),
-    switchMap(() => this.formService.getStyles()
-      .pipe(
-        map(styles => ({ type: FormActions.GetStylesSuccess, data: styles })),
-        catchError(() => of({ type: FormActions.GetStylesFailed, err: 'err' }))
-      ))
-  ))
 
   getFields$ = createEffect(() => this.actions$.pipe(
     ofType(FormActions.GetFields),

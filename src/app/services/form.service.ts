@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment';
-import { Styles } from './../interfaces';
+import { Field } from './../interfaces';
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable, catchError, throwError } from 'rxjs';
@@ -11,17 +11,8 @@ export class FormService {
 
   constructor(private http: HttpClient) { }
 
-  getStyles(): Observable<Styles> {
-    return this.http.get<Styles>(`${environment.server}styles`)
-      .pipe(
-        catchError(error => {
-          return throwError(error)
-        })
-      )
-  }
-
-  getFields(): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.server}fields`)
+  getFields(): Observable<Field[]> {
+    return this.http.get<Field[]>(`${environment.server}fields`)
       .pipe(
         catchError(error => {
           return throwError(error)

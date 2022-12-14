@@ -1,3 +1,4 @@
+import { FormStylesComponent } from './components/main/form-styles/form-styles.component';
 import { FormEffects } from './store/form.effects';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './services/auth.guard';
@@ -19,13 +20,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
-
-import { FormElementsComponent } from './components/form-elements/form-elements.component'
+import { FormElementsComponent } from './components/main/form-elements/form-elements.component'
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
+import { ListElementsComponent } from './components/main/list-elements/list-elements.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
@@ -33,8 +35,7 @@ import { reducers, metaReducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ListElementsComponent } from './components/list-elements/list-elements.component';
-import { FormStylesComponent } from './components/form-styles/form-styles.component';
+
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -52,6 +53,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MainComponent,
     ListElementsComponent,
     FormStylesComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MatDialogModule,
     MatDividerModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     StoreModule.forRoot(reducers, {
       metaReducers
     }),

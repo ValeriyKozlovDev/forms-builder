@@ -5,11 +5,17 @@
   </mat-grid-tile>
   <div cdkDropListGroup>
     <mat-grid-tile class="form-block-container">
-      <app-form-elements (toDrop)="drop($event)" [selectedElements]="selectedElements" class="form-block">
+      <app-form-elements (toDrop)="drop($event)" [styles]="styles" [selectedElements]="selectedElements"
+        class="form-block">
       </app-form-elements>
     </mat-grid-tile>
+
     <mat-grid-tile class="form-block-container">
-      <app-list-elements (toDrop)="drop($event)" [listElements]="listElements" class="form-block"></app-list-elements>
+      <div *ngIf="fieldsLoading$ | async">
+        <app-loader></app-loader>
+      </div>
+      <app-list-elements *ngIf="fieldsLoaded$ | async" (toDrop)="drop($event)" [listElements]="listElements"
+        class="form-block"></app-list-elements>
     </mat-grid-tile>
   </div>
 </mat-grid-list>

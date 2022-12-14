@@ -1,7 +1,8 @@
+import { Field } from './../../interfaces';
 import { map } from 'rxjs/operators';
 import { getFields } from './../../store/form.actions';
-import { ReplaySubject, tap, takeUntil } from 'rxjs';
-import { fieldsSelector } from './../../store/form.reducer';
+import { ReplaySubject, takeUntil } from 'rxjs';
+import { fieldsSelector, fieldsLoadingSelector, fieldsLoadedSelector } from './../../store/form.reducer';
 import { Store } from '@ngrx/store';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
@@ -15,34 +16,33 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 export class MainComponent {
 
-  selectedElements = ['input', 'textarea', 'button'];
+  selectedElements = ['input'];
   elemIndex!: number
   elem = 'input'
-  listElements!: string[];
-  // 'input', 'textarea', 'button', 'checkbox', 'select'
+  listElements: any[] = []
+  styles: any = {}
+  selectedStyles: string[] = []
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
-
   fields$ = this.store.select(fieldsSelector)
+  fieldsLoading$ = this.store.select(fieldsLoadingSelector)
+  fieldsLoaded$ = this.store.select(fieldsLoadedSelector)
 
   constructor(private store: Store) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.store.dispatch(getFields())
     this.fields$
       .pipe(
         map((fields) => JSON.parse(JSON.stringify(fields))),
-        tap((item) => this.listElements = item),
+        map((item) => item.forEach((elem: Field) => { this.listElements.push(elem.type), this.styles = { ...this.styles, [elem.type]: elem.styles } })),
         takeUntil(this.destroy),
       ).subscribe()
   }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      console.log(event.previousContainer, event.container)
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      console.log('onSecond')
-
       this.elemIndex = event.previousIndex
       this.elem = this.listElements[this.elemIndex]
       transferArrayItem(
@@ -52,10 +52,7 @@ export class MainComponent {
         event.currentIndex,
       );
       if (this.listElements.length === 4) {
-
         this.listElements = [...this.listElements.slice(0, this.elemIndex), this.elem, ...this.listElements.slice(this.elemIndex, this.listElements.length)]
-        console.log('4 elements', this.listElements)
-
       }
     }
   }

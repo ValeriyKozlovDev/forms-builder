@@ -1,20 +1,22 @@
 {
-  "fields" : [
-    "input",
-    "textarea",
-    "button",
-    "checkbox",
-    "select"
-  ],
 
-  "styles" :
+  "fields":[
     {
-      "input": ["label", "placeholder", "width", "height", "font size", "font weight", "color input", "border style", "required"],
-      "textarea": ["label", "placeholder", "width", "height", "font size", "font weight", "color input", "border style", "required"],
-      "button": ["label", "width", "height", "font size",  "font weight", "color", "border style", "required"],
-      "checkbox": ["label", "font size",  "font weight", "color", "border style", "required"],
-      "select": ["label", "width", "height", "font size", "font weight", "color input", "border style", "required"]
-   },
+      "id": 1, "type": "input", "styles": ["label", "placeholder", "width", "height", "font size", "font weight", "color input", "border style", "required"]
+    },
+    {
+      "id": 2, "type": "textarea", "styles": ["label", "placeholder", "width", "height", "font size", "font weight", "color input", "border style", "required"]
+    },
+    {
+      "id": 3, "type": "button", "styles": ["label", "width", "height", "font size", "font weight", "color", "border style", "required"]
+    },
+    {
+      "id": 4, "type": "checkbox", "styles": ["label", "font size", "font weight", "color", "border style", "required"]
+    },
+    {
+      "id": 5, "type": "select", "styles": ["label", "width", "height", "font size", "font weight", "color input", "border style", "required"]
+    }
+  ],
 
    "borderTypes": [
     "dotted",
