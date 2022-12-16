@@ -1,3 +1,4 @@
+import { StylesPipe } from './pipes/styles.pipe';
 import { FormStylesComponent } from './components/main/form-styles/form-styles.component';
 import { FormEffects } from './store/form.effects';
 import { AuthInterceptor } from './auth.interceptor';
@@ -21,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 import { FormElementsComponent } from './components/main/form-elements/form-elements.component'
 import { HeaderComponent } from './components/header/header.component';
@@ -54,6 +57,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ListElementsComponent,
     FormStylesComponent,
     LoaderComponent,
+    StylesPipe
   ],
   imports: [
     BrowserModule,
@@ -73,6 +77,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MatDialogModule,
     MatDividerModule,
     MatCardModule,
+    MatCheckboxModule,
     MatProgressSpinnerModule,
     StoreModule.forRoot(reducers, {
       metaReducers

@@ -1,6 +1,6 @@
-import { Field, FormStyles } from './../interfaces';
+import { Field, FormStyles, FormElement } from './../interfaces';
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { getFields, getFieldsSuccess, getFieldsFailed, getBorderTypes, getBorderTypesSuccess, getBorderTypesFailed, selectStyles, applyFormStyles } from './form.actions';
+import { getFields, getFieldsSuccess, getFieldsFailed, getBorderTypes, getBorderTypesSuccess, getBorderTypesFailed, selectStyles, applyFormStyles, addFormElement, applyElementStyles } from './form.actions';
 
 export const form = 'form';
 
@@ -12,7 +12,10 @@ export interface FormState {
   borderTypesLoading: boolean,
   borderTypesLoaded: boolean,
   selectedStyles: string[],
-  formStyles: FormStyles
+  formStyles: FormStyles,
+  selectedElements: FormElement[],
+  selectedItemId: number
+  selectedItemIndex: number
 }
 
 export const initialState: FormState = {
@@ -29,7 +32,10 @@ export const initialState: FormState = {
     backgroundColor: '',
     borderColor: '',
     borderType: ''
-  }
+  },
+  selectedElements: [{ id: 0, type: 'input', styles: {} }],
+  selectedItemId: 0,
+  selectedItemIndex: 0
 };
 
 export const formReducer = createReducer(
@@ -69,12 +75,23 @@ export const formReducer = createReducer(
   })),
   on(selectStyles, (state, action) => ({
     ...state,
-    selectedStyles: action.data
+    selectedStyles: action.data,
+    selectedItemId: action.id,
+    selectedItemIndex: action.index
   })),
   on(applyFormStyles, (state, action) => ({
     ...state,
     formStyles: { ...action.data }
   })),
+  on(addFormElement, (state, action) => ({
+    ...state,
+    selectedElements: [...state.selectedElements.slice(0, action.index), action.data, ...state.selectedElements.slice(action.index, state.selectedElements.length)]
+  })),
+  on(applyElementStyles, (state, action) => ({
+    ...state,
+    selectedElements: [...state.selectedElements.slice(0, state.selectedItemIndex), { ...state.selectedElements[state.selectedItemIndex], ['styles']: action.data }, ...state.selectedElements.slice(state.selectedItemIndex + 1, state.selectedElements.length)]
+  })),
+
 )
 
 export const featureSelector = createFeatureSelector<FormState>(form)
@@ -118,6 +135,11 @@ export const formStylesSelector = createSelector(
   featureSelector,
   state => state.formStyles
 );
+
+export const selectedElementsSelector = createSelector(
+  featureSelector,
+  state => state.selectedElements
+)
 
 
 

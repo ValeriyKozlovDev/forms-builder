@@ -27,3 +27,10 @@ export interface FormStyles {
   borderColor: string,
   borderType: string
 }
+
+
+export interface FormElement {
+  id: number
+  type: string,
+  styles: {}
+}

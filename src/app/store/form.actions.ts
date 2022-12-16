@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Field, FormStyles } from './../interfaces';
+import { Field, FormStyles, FormElement } from './../interfaces';
 
 export enum FormActions {
 
@@ -10,7 +10,9 @@ export enum FormActions {
   GetBorderTypesSuccess = '[FORM] get border types success',
   GetBorderTypesFailed = '[FORM] get border types failed',
   SelectStyles = '[FORM] select styles',
-  ApplyFormStyles = '[FORM] apply form styles'
+  ApplyFormStyles = '[FORM] apply form styles',
+  ApplyElementStyles = '[FORM] apply element styles',
+  AddFormElement = '[FORM] add form element'
 }
 
 export const getFields = createAction(FormActions.GetFields);
@@ -39,10 +41,19 @@ export const getBorderTypesFailed = createAction(
 
 export const selectStyles = createAction(
   FormActions.SelectStyles,
-  props<{ data: string[] }>()
+  props<{ data: string[], id: number, index: number }>()
 );
 
 export const applyFormStyles = createAction(
   FormActions.ApplyFormStyles,
   props<{ data: FormStyles }>()
+)
+
+export const addFormElement = createAction(
+  FormActions.AddFormElement,
+  props<{ data: FormElement, index: number }>()
+)
+export const applyElementStyles = createAction(
+  FormActions.ApplyElementStyles,
+  props<{ data: any }>()
 )
