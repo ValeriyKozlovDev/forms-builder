@@ -1,3 +1,7 @@
+import { TextInputComponent } from './components/fields/text-input/text-input.component';
+import { SelectorComponent } from './components/fields/selector/selector.component';
+import { CheckboxComponent } from './components/fields/checkbox/checkbox.component';
+import { ColorInputComponent } from './components/fields/color-input/color-input.component';
 import { StylesPipe } from './pipes/styles.pipe';
 import { FormStylesComponent } from './components/main/form-styles/form-styles.component';
 import { FormEffects } from './store/form.effects';
@@ -61,7 +65,11 @@ const INTERCEPTOR_PROVIDER: Provider = {
     LoaderComponent,
     StylesPipe,
     GeneralFormStylesComponent,
-    ElementsStylesComponent
+    ElementsStylesComponent,
+    ColorInputComponent,
+    CheckboxComponent,
+    SelectorComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,

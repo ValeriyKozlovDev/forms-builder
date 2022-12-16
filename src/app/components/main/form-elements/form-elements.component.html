@@ -1,6 +1,10 @@
 <div *ngIf="formStyles$ | async as formStyles">
   <div [ngStyle]="formStyles | style" class="selected-form wrapper form-label">
-    <div class="text text_middle selected-form__label">{{formStyles.label}}</div>
+    <div *ngIf="formStyles.label; else noName" class="text text_middle selected-form__label">{{formStyles.label}}</div>
+    <ng-template #noName>
+      <div class="text text_middle selected-form__label">Form Label
+      </div>
+    </ng-template>
     <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list" cdkDropListDisabled
       (cdkDropListDropped)="drop($event)">
       <div *ngIf="formElements$ | async as formElements">
