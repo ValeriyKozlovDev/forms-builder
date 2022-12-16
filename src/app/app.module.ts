@@ -38,6 +38,8 @@ import { reducers, metaReducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { GeneralFormStylesComponent } from './components/main/form-styles/general-form-styles/general-form-styles.component';
+import { ElementsStylesComponent } from './components/main/form-styles/elements-styles/elements-styles.component';
 
 
 
@@ -57,7 +59,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ListElementsComponent,
     FormStylesComponent,
     LoaderComponent,
-    StylesPipe
+    StylesPipe,
+    GeneralFormStylesComponent,
+    ElementsStylesComponent
   ],
   imports: [
     BrowserModule,
