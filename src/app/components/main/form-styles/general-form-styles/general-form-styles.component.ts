@@ -27,6 +27,7 @@ export class GeneralFormStylesComponent implements OnInit {
     })
   }
 
+
   applyFormStyles(): void {
     if (this.generalForm.valid) {
       const formData = { ...this.generalForm.value }

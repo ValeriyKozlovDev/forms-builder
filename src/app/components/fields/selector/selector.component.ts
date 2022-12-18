@@ -10,7 +10,8 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 })
 export class SelectorComponent implements ControlValueAccessor {
 
-  @Input() borderTypes!: string[]
+  @Input() items!: string[]
+  @Input() label!: string
 
   public value: string | undefined;
 
@@ -25,8 +26,8 @@ export class SelectorComponent implements ControlValueAccessor {
   }
 
   public onEditorValueChange(event: Event): void {
-    const targetSelectElement = event.target as HTMLSelectElement;
-    const content = targetSelectElement.value;
+    const targetSelectElement = event.target as HTMLSpanElement;
+    const content = JSON.parse(JSON.stringify(targetSelectElement.textContent));
 
     this.onChange(content);
   }

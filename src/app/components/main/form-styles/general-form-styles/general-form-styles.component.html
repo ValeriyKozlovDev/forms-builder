@@ -1,58 +1,31 @@
 <form [formGroup]="generalForm" (ngSubmit)="applyFormStyles()">
 
-
   <mat-form-field class="accordion__form-label">
     <mat-label>Form label</mat-label>
     <input matInput formControlName="label">
   </mat-form-field>
 
-
   <mat-grid-list cols="2" rowHeight="100px">
     <mat-grid-tile>
-      <!-- <mat-form-field class="accordion__field">
-        <mat-label>Text Color</mat-label>
-        <input matInput type="color" formControlName="textColor">
-      </mat-form-field> -->
       <app-color-input [label]="'Text Color'" [formControlName]="'textColor'"></app-color-input>
     </mat-grid-tile>
     <mat-grid-tile>
-      <!-- <mat-form-field class="accordion__field">
-        <mat-label>Background</mat-label>
-        <input matInput>
-        <input type="color" formControlName="backgroundColor">
-      </mat-form-field> -->
       <app-color-input [label]="'Background'" [formControlName]="'backgroundColor'"></app-color-input>
     </mat-grid-tile>
   </mat-grid-list>
 
-
   <mat-grid-list cols="2" rowHeight="100px">
     <mat-grid-tile>
-      <mat-form-field appearance="fill">
-        <mat-label>Border type</mat-label>
-        <mat-select [(ngModel)]="selectedValue" name="food" formControlName="borderType">
-          <div *ngIf="borderTypes$ | async as borderTypes">
-            <mat-option *ngFor="let borderType of borderTypes; let i = index" [value]="borderType">
-              {{borderType}}
-            </mat-option>
-          </div>
-        </mat-select>
-      </mat-form-field>
+      <div *ngIf="borderTypes$ | async as borderTypes">
+        <app-selector [items]="borderTypes" [label]="'Border Type'" [formControlName]="'borderType'">
+        </app-selector>
+      </div>
     </mat-grid-tile>
     <mat-grid-tile>
-      <!-- <mat-form-field class="accordion__field">
-        <mat-label>Border Color</mat-label>
-        <mat-grid-list cols="2" rowHeight="25px">
-          <mat-grid-tile>
-            <input matInput>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <input type="color" formControlName="borderColor">
-          </mat-grid-tile>
-        </mat-grid-list>
-      </mat-form-field> -->
       <app-color-input [label]="'Border Color'" [formControlName]="'borderColor'"></app-color-input>
     </mat-grid-tile>
   </mat-grid-list>
+
   <button mat-raised-button type="submit" [disabled]="generalForm.invalid">Apply</button>
+
 </form>

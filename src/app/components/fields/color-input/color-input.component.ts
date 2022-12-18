@@ -33,7 +33,6 @@ export class ColorInputComponent implements ControlValueAccessor {
 
   public writeValue(value: string): void {
     this.value = value;
-
     this.changeDetector.detectChanges();
   }
 

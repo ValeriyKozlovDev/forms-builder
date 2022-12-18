@@ -11,6 +11,28 @@
         </mat-form-field>
       </div>
 
+
+      <!-- <div
+        *ngIf="style === 'text color' || style === 'border color' || style ===  'color'  || style ===  'background color' || style === 'color input'">
+        <mat-grid-list cols="2" rowHeight="100px">
+          <mat-grid-tile>
+            <app-color-input [label]="'Text Color'" [formControlName]="'textColor'"></app-color-input>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+
+      <div *ngIf="style === 'border type'">
+        <mat-grid-tile>
+          <div *ngIf="borderTypes$ | async as borderTypes">
+            <app-selector [items]="borderTypes" [label]="'Border Type'" [formControlName]="'borderType'">
+            </app-selector>
+          </div>
+        </mat-grid-tile>
+      </div> -->
+
+
+
       <div *ngIf="style === 'border type'">
         <mat-form-field appearance="fill">
           <mat-label>Border type</mat-label>
