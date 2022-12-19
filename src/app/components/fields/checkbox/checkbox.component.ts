@@ -1,3 +1,4 @@
+import { Field } from 'src/app/abstracts';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
@@ -8,7 +9,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class CheckboxComponent implements ControlValueAccessor {
+export class CheckboxComponent implements ControlValueAccessor, Field {
 
   @Input() label!: string
 

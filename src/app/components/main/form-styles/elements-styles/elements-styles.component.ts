@@ -3,6 +3,7 @@ import { applyElementStyles } from './../../../../store/form.actions';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { FormControls } from 'src/app/functions';
 
 @Component({
   selector: 'app-elements-styles',
@@ -41,5 +42,9 @@ export class ElementsStylesComponent implements OnInit {
   applyElementsStyles(): void {
     const formData = { ...this.elementsForm.value }
     this.store.dispatch(applyElementStyles({ data: formData }))
+  }
+
+  formControls(style: string) {
+    return FormControls(style)
   }
 }

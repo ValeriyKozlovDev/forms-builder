@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { Field } from 'src/app/abstracts';
+
 
 @Component({
   selector: 'app-selector',
@@ -8,7 +10,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class SelectorComponent implements ControlValueAccessor {
+export class SelectorComponent implements ControlValueAccessor, Field {
 
   @Input() items!: string[]
   @Input() label!: string

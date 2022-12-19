@@ -1,0 +1,19 @@
+export abstract class Field {
+  value!: string | undefined
+  label!: string
+
+  onEditorValueChange(event: Event): void {
+  }
+
+  writeValue(value: string): void {
+  }
+
+  registerOnChange(fn: (value: any) => void): void {
+  }
+
+  registerOnTouched(fn: () => void): void {
+
+  }
+}
+
+

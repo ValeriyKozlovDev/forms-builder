@@ -5,8 +5,7 @@
     <div *ngFor="let style of selectedStyles; let i = index" class="accordion__styles-container">
 
       <div *ngIf="style === 'label' || style === 'placeholder'">
-        <app-text-input *ngIf="style.split(' ')[1]" [label]="style"
-          [formControlName]="style.split(' ')[0] + style.split(' ')[1][0].toUpperCase() + style.split(' ')[1].slice(1)">
+        <app-text-input *ngIf="style.split(' ')[1]" [label]="style" [formControlName]="formControls(style)">
         </app-text-input>
         <app-text-input *ngIf="!style.split(' ')[1]" [label]="style" [formControlName]="style">
         </app-text-input>
@@ -16,8 +15,7 @@
         *ngIf="style === 'text color' || style === 'border color' || style ===  'color'  || style ===  'background color' || style === 'color input'">
         <mat-grid-list cols="2" rowHeight="100px">
           <mat-grid-tile>
-            <app-color-input *ngIf="style.split(' ')[1]" [label]="style"
-              [formControlName]="style.split(' ')[0] + style.split(' ')[1][0].toUpperCase() + style.split(' ')[1].slice(1)">
+            <app-color-input *ngIf="style.split(' ')[1]" [label]="style" [formControlName]="formControls(style)">
             </app-color-input>
             <app-color-input *ngIf="!style.split(' ')[1]" [label]="style" [formControlName]="style">
             </app-color-input>
@@ -28,8 +26,7 @@
       <div *ngIf="style === 'width' || style === 'height' || style === 'font size' || style === 'font weight'">
         <mat-grid-list cols="2" rowHeight="100px">
           <mat-grid-tile>
-            <app-number-input *ngIf="style.split(' ')[1]" [label]="style"
-              [formControlName]="style.split(' ')[0] + style.split(' ')[1][0].toUpperCase() + style.split(' ')[1].slice(1)">
+            <app-number-input *ngIf="style.split(' ')[1]" [label]="style" [formControlName]="formControls(style)">
             </app-number-input>
             <app-number-input *ngIf="!style.split(' ')[1]" [label]="style" [formControlName]="style">
             </app-number-input>

@@ -5,7 +5,7 @@ import { getBorderTypes } from './../../../store/form.actions';
 @Component({
   selector: 'app-form-styles',
   templateUrl: './form-styles.component.html',
-  styleUrls: ['./form-styles.component.css'],
+  styleUrls: ['./form-styles.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
