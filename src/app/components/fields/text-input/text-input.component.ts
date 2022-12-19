@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Self } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -9,6 +9,8 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 })
 export class TextInputComponent implements ControlValueAccessor {
+
+  @Input() label!: string
   public value: string | undefined;
 
   private onChange!: (value: string) => void;

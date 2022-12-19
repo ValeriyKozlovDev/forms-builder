@@ -2,19 +2,19 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } fr
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.css'],
+  selector: 'app-number-input',
+  templateUrl: './number-input.component.html',
+  styleUrls: ['./number-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class CheckboxComponent implements ControlValueAccessor {
+export class NumberInputComponent implements ControlValueAccessor {
 
   @Input() label!: string
 
   public value: string | undefined;
 
-  private onChange!: (value: boolean) => void;
+  private onChange!: (value: string) => void;
   private onTouched!: () => void;
 
   constructor(
@@ -26,7 +26,7 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   public onEditorValueChange(event: Event): void {
     const targetInputElement = event.target as HTMLInputElement;
-    const content = targetInputElement.checked;
+    const content = targetInputElement.value;
 
     this.onChange(content);
   }
@@ -37,7 +37,7 @@ export class CheckboxComponent implements ControlValueAccessor {
     this.changeDetector.detectChanges();
   }
 
-  public registerOnChange(fn: (value: boolean) => void): void {
+  public registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 

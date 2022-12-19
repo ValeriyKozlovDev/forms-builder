@@ -2,7 +2,7 @@ import { CheckboxComponent } from './checkbox.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 
-describe('TestTestComponent', () => {
+describe('CheckboxComponent', () => {
   let component: CheckboxComponent;
   let fixture: ComponentFixture<CheckboxComponent>;
 

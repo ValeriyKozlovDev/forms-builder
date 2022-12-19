@@ -1,9 +1,6 @@
 <form [formGroup]="generalForm" (ngSubmit)="applyFormStyles()">
 
-  <mat-form-field class="accordion__form-label">
-    <mat-label>Form label</mat-label>
-    <input matInput formControlName="label">
-  </mat-form-field>
+  <app-text-input [label]="'Form label'" [formControlName]="'label'"></app-text-input>
 
   <mat-grid-list cols="2" rowHeight="100px">
     <mat-grid-tile>

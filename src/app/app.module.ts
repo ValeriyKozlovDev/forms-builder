@@ -1,3 +1,4 @@
+import { NumberInputComponent } from './components/fields/number-input/number-input.component';
 import { TextInputComponent } from './components/fields/text-input/text-input.component';
 import { SelectorComponent } from './components/fields/selector/selector.component';
 import { CheckboxComponent } from './components/fields/checkbox/checkbox.component';
@@ -69,7 +70,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ColorInputComponent,
     CheckboxComponent,
     SelectorComponent,
-    TextInputComponent
+    TextInputComponent,
+    NumberInputComponent
   ],
   imports: [
     BrowserModule,
