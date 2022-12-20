@@ -1,6 +1,6 @@
-import { Field } from 'src/app/abstracts';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { BaseField } from 'src/app/directives/base-field.directive';
 
 @Component({
   selector: 'app-checkbox',
@@ -9,7 +9,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class CheckboxComponent implements ControlValueAccessor, Field {
+export class CheckboxComponent implements ControlValueAccessor, BaseField {
 
   @Input() label!: string
 

@@ -45,6 +45,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GeneralFormStylesComponent } from './components/main/form-styles/general-form-styles/general-form-styles.component';
 import { ElementsStylesComponent } from './components/main/form-styles/elements-styles/elements-styles.component';
+import { NameForFormControlPipe } from './pipes/name-for-form-control.pipe';
 
 
 
@@ -71,7 +72,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     CheckboxComponent,
     SelectorComponent,
     TextInputComponent,
-    NumberInputComponent
+    NumberInputComponent,
+    NameForFormControlPipe
   ],
   imports: [
     BrowserModule,

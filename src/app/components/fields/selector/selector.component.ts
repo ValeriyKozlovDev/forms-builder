@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { Field } from 'src/app/abstracts';
+import { BaseField } from 'src/app/directives/base-field.directive';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { Field } from 'src/app/abstracts';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class SelectorComponent implements ControlValueAccessor, Field {
+export class SelectorComponent implements ControlValueAccessor, BaseField {
 
   @Input() items!: string[]
   @Input() label!: string

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { Field } from 'src/app/abstracts';
+import { BaseField } from 'src/app/directives/base-field.directive';
 
 @Component({
   selector: 'app-color-input',
@@ -9,7 +9,7 @@ import { Field } from 'src/app/abstracts';
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class ColorInputComponent implements ControlValueAccessor, Field {
+export class ColorInputComponent implements ControlValueAccessor, BaseField {
 
   @Input() label!: string
 

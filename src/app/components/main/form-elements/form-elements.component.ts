@@ -7,7 +7,7 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
 @Component({
   selector: 'app-form-elements',
   templateUrl: './form-elements.component.html',
-  styleUrls: ['./form-elements.component.css'],
+  styleUrls: ['./form-elements.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

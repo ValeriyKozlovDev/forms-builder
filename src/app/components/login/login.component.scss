@@ -6,10 +6,9 @@
   border-radius: 12px;
   padding: 10px;
   background-color: rgb(238, 250, 255);
-}
-
-.toggle > span {
-  margin-right: 10px;
+  >span{
+    margin-right: 10px;
+  }
 }
 
 .form{
@@ -21,16 +20,13 @@
 
 .login-form{
   width: 350px;
-
 }
 
-.login-form__input-control{
-  width: 100%;
-}
 .login-form__input-control{
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .login-form__title{

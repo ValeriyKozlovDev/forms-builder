@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 @Component({
   selector: 'app-list-elements',
   templateUrl: './list-elements.component.html',
-  styleUrls: ['./list-elements.component.css'],
+  styleUrls: ['./list-elements.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })

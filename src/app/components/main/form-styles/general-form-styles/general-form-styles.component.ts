@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-general-form-styles',
   templateUrl: './general-form-styles.component.html',
-  styleUrls: ['./general-form-styles.component.css']
+  styleUrls: ['./general-form-styles.component.scss']
 })
 export class GeneralFormStylesComponent implements OnInit {
 
