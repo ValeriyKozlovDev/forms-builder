@@ -25,3 +25,20 @@ $lh-s: 17px;
     line-height: $lh-l;
   }
 }
+.field-container{
+  width: 97%;
+}
+
+.button{
+  background: #EEF2F4;
+  border-radius: 4px;
+  width: 155px;
+  height: 30px;
+  border: none;
+}
+
+.button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

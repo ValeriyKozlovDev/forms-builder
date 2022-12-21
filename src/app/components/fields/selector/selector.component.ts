@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
+import { selectedStylesSelector } from './../../../store/form.reducer';
+import { Store } from '@ngrx/store';
+import { ReplaySubject, tap, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self, OnInit, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { BaseField } from 'src/app/directives/base-field.directive';
 
@@ -6,11 +9,11 @@ import { BaseField } from 'src/app/directives/base-field.directive';
 @Component({
   selector: 'app-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css'],
+  styleUrls: ['./selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class SelectorComponent implements ControlValueAccessor, BaseField {
+export class SelectorComponent implements ControlValueAccessor, BaseField, OnInit, OnDestroy {
 
   @Input() items!: string[]
   @Input() label!: string
@@ -20,11 +23,24 @@ export class SelectorComponent implements ControlValueAccessor, BaseField {
   private onChange!: (value: string) => void;
   private onTouched!: () => void;
 
+  selectedStyles$ = this.store.select(selectedStylesSelector)
+
+  destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
   constructor(
     @Self() private readonly ngControl: NgControl,
-    private readonly changeDetector: ChangeDetectorRef
+    private readonly changeDetector: ChangeDetectorRef,
+    private store: Store
   ) {
     this.ngControl.valueAccessor = this;
+  }
+
+  ngOnInit(): void {
+    this.selectedStyles$
+      .pipe(
+        tap(() => this.value = ""),
+        takeUntil(this.destroy),
+      ).subscribe()
   }
 
   public onEditorValueChange(event: Event): void {
@@ -46,6 +62,11 @@ export class SelectorComponent implements ControlValueAccessor, BaseField {
 
   public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  ngOnDestroy() {
+    this.destroy.next(null);
+    this.destroy.complete();
   }
 }
 

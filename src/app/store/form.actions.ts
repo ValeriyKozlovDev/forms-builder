@@ -12,7 +12,8 @@ export enum FormActions {
   SelectStyles = '[FORM] select styles',
   ApplyFormStyles = '[FORM] apply form styles',
   ApplyElementStyles = '[FORM] apply element styles',
-  AddFormElement = '[FORM] add form element'
+  AddFormElement = '[FORM] add form element',
+  DeleteElement = '[FORM] delete element'
 }
 
 export const getFields = createAction(FormActions.GetFields);
@@ -56,4 +57,7 @@ export const addFormElement = createAction(
 export const applyElementStyles = createAction(
   FormActions.ApplyElementStyles,
   props<{ data: any }>()
+)
+export const deleteElement = createAction(
+  FormActions.DeleteElement
 )

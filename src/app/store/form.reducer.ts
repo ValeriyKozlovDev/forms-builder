@@ -1,6 +1,6 @@
 import { Field, FormStyles, FormElement } from './../interfaces';
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { getFields, getFieldsSuccess, getFieldsFailed, getBorderTypes, getBorderTypesSuccess, getBorderTypesFailed, selectStyles, applyFormStyles, addFormElement, applyElementStyles } from './form.actions';
+import { getFields, getFieldsSuccess, getFieldsFailed, getBorderTypes, getBorderTypesSuccess, getBorderTypesFailed, selectStyles, applyFormStyles, addFormElement, applyElementStyles, deleteElement } from './form.actions';
 
 export const form = 'form';
 
@@ -14,7 +14,7 @@ export interface FormState {
   selectedStyles: string[],
   formStyles: FormStyles,
   selectedElements: FormElement[],
-  selectedItemId: number
+  selectedItemId: number,
   selectedItemIndex: number
 }
 
@@ -91,6 +91,14 @@ export const formReducer = createReducer(
     ...state,
     selectedElements: [...state.selectedElements.slice(0, state.selectedItemIndex), { ...state.selectedElements[state.selectedItemIndex], ['styles']: action.data }, ...state.selectedElements.slice(state.selectedItemIndex + 1, state.selectedElements.length)]
   })),
+  on(deleteElement, state => ({
+    ...state,
+    selectedElements: [...state.selectedElements.slice(0, state.selectedItemIndex), ...state.selectedElements.slice(state.selectedItemIndex + 1, state.selectedElements.length)],
+    selectedItemIndex: NaN,
+    selectedItemId: NaN,
+    selectedStyles: []
+  })
+  )
 
 )
 
@@ -139,6 +147,11 @@ export const formStylesSelector = createSelector(
 export const selectedElementsSelector = createSelector(
   featureSelector,
   state => state.selectedElements
+)
+
+export const selectedItemIdSelector = createSelector(
+  featureSelector,
+  state => state.selectedItemId
 )
 
 

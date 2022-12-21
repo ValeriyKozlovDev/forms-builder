@@ -1,28 +1,44 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectedStylesSelector } from './../../../store/form.reducer';
+import { ReplaySubject, tap, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self, OnInit, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { BaseField } from 'src/app/directives/base-field.directive';
 
 @Component({
   selector: 'app-color-input',
   templateUrl: './color-input.component.html',
-  styleUrls: ['./color-input.component.css'],
+  styleUrls: ['./color-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class ColorInputComponent implements ControlValueAccessor, BaseField {
+export class ColorInputComponent implements ControlValueAccessor, BaseField, OnInit, OnDestroy {
 
   @Input() label!: string
 
   public value: string | undefined;
 
+  selectedStyles$ = this.store.select(selectedStylesSelector)
+
   private onChange!: (value: string) => void;
   private onTouched!: () => void;
 
+  destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
   constructor(
     @Self() private readonly ngControl: NgControl,
-    private readonly changeDetector: ChangeDetectorRef
+    private readonly changeDetector: ChangeDetectorRef,
+    private store: Store
   ) {
     this.ngControl.valueAccessor = this;
+  }
+
+  ngOnInit(): void {
+    this.selectedStyles$
+      .pipe(
+        tap(() => this.value = ""),
+        takeUntil(this.destroy),
+      ).subscribe()
   }
 
   public onEditorValueChange(event: Event): void {
@@ -43,6 +59,11 @@ export class ColorInputComponent implements ControlValueAccessor, BaseField {
 
   public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  ngOnDestroy() {
+    this.destroy.next(null);
+    this.destroy.complete();
   }
 }
 

@@ -1,7 +1,7 @@
 <div class="wrapper">
-  <div cdkDropList [cdkDropListData]="listElements" cdkDropListSortingDisabled class="list"
+  <div cdkDropList [cdkDropListData]="listElements" cdkDropListSortingDisabled class="wrapper__list"
     (cdkDropListDropped)="drop($event)">
-    <div class="text box" *ngFor="let field of listElements; let i = index" cdkDrag>{{field[0].toUpperCase() +
+    <div class="text wrapper__box" *ngFor="let field of listElements; let i = index" cdkDrag>{{field[0].toUpperCase() +
       field.slice(1)}}</div>
   </div>
 </div>

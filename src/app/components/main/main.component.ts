@@ -1,5 +1,6 @@
+import { tap } from 'rxjs';
 import { Field, FormElement } from './../../interfaces';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { getFields, addFormElement, selectStyles } from './../../store/form.actions';
 import { ReplaySubject, takeUntil } from 'rxjs';
 import { fieldsSelector, fieldsLoadingSelector, fieldsLoadedSelector } from './../../store/form.reducer';
@@ -23,7 +24,9 @@ export class MainComponent {
   elem: string = 'input'
   listElements: any[] = []
   styles: any = {}
+
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+
   fields$ = this.store.select(fieldsSelector)
   fieldsLoading$ = this.store.select(fieldsLoadingSelector)
   fieldsLoaded$ = this.store.select(fieldsLoadedSelector)
@@ -36,6 +39,7 @@ export class MainComponent {
       .pipe(
         map((fields) => JSON.parse(JSON.stringify(fields))),
         map((item) => item.forEach((elem: Field) => { this.listElements.push(elem.type), this.styles = { ...this.styles, [elem.type]: elem.styles } })),
+        tap(() => this.store.dispatch(selectStyles({ data: this.styles[this.elem], id: 0, index: 0 }))),
         takeUntil(this.destroy),
       ).subscribe()
   }
