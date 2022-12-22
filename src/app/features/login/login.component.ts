@@ -3,8 +3,9 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ReplaySubject, takeUntil } from 'rxjs';
-import { selectLoginAgain } from './store/auth.selectors';
+import { selectLoginAgain, selectLoading } from './store/auth.selectors';
 import { User } from './store/interfaces';
+import { setLoading } from './store/auth.actions';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -18,10 +19,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   haveAcc = true
   formGroup!: FormGroup;
   submitted = false
-  @Input() formError = '';
   message!: string
 
+  @Input() formError = '';
 
+  loading$ = this.store.select(selectLoading)
   loginAgain$ = this.store.select(selectLoginAgain)
 
   constructor(
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.formGroup.invalid) {
       return
     }
+    this.store.dispatch(setLoading({ data: true }))
     this.submitted = true
 
     const user: User = {
@@ -75,6 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   signIn(user: User) {
     this.auth.login(user).pipe(takeUntil(this.destroy)).subscribe((response) => {
+      this.store.dispatch(setLoading({ data: false }))
       this.formGroup.reset()
       this.router.navigate(['/main'])
     }, () => {

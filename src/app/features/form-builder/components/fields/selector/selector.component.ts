@@ -1,9 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self, OnInit, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  Self,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ReplaySubject, tap, takeUntil } from 'rxjs';
-import { selectedStylesSelector } from '../../../store/form.selectors';
+import { selectSelectedStyles } from '../../../store/form.selectors';
 import { BaseField } from 'src/app/shared/directives/base-field.directive';
+import { deepClone } from 'src/app/shared/functions';
 
 @Component({
   selector: 'app-selector',
@@ -23,7 +32,7 @@ export class SelectorComponent implements ControlValueAccessor, BaseField, OnIni
   private onChange!: (value: string) => void;
   private onTouched!: () => void;
 
-  selectedStyles$ = this.store.select(selectedStylesSelector)
+  selectedStyles$ = this.store.select(selectSelectedStyles)
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -45,7 +54,7 @@ export class SelectorComponent implements ControlValueAccessor, BaseField, OnIni
 
   public onEditorValueChange(event: Event): void {
     const targetSelectElement = event.target as HTMLSpanElement;
-    const content = JSON.parse(JSON.stringify(targetSelectElement.textContent));
+    const content = deepClone(targetSelectElement.textContent);
 
     this.onChange(content);
   }

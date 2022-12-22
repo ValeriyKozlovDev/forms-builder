@@ -1,22 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
-import { changeFlag } from './auth.actions';
+import { changeAccessFlag, setLoading } from './auth.actions';
 
 export const auth = 'auth';
 
 export interface AuthState {
-
-  loginAgain: boolean
+  loginAgain: boolean,
+  loading: boolean
 }
 
 export const initialState: AuthState = {
-  loginAgain: false
+  loginAgain: false,
+  loading: false
+
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(changeFlag, (state, action) => ({
+  on(changeAccessFlag, (state, action) => ({
     ...state,
     loginAgain: action.data
+  })),
+  on(setLoading, (state, action) => ({
+    ...state,
+    loading: action.data
   })),
 )
 

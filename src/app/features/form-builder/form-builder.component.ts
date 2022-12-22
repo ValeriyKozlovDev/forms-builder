@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { tap, ReplaySubject, takeUntil } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { getFields, addFormElement, selectStyles } from './store/form.actions';
-import { fieldsSelector, fieldsLoadingSelector, fieldsLoadedSelector } from './store/form.selectors';
+import { selectFields, selectFieldsLoading, selectFieldsError } from './store/form.selectors';
 
 @Component({
   selector: 'app-form-builder',
@@ -21,14 +21,14 @@ export class FormBuilderComponent {
   previousIndex!: number
   currentIndex!: number
   elem: string = 'input'
-  listElements: any[] = []
+  listElements: string[] = []
   styles: any = {}
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-  fields$ = this.store.select(fieldsSelector)
-  fieldsLoading$ = this.store.select(fieldsLoadingSelector)
-  fieldsLoaded$ = this.store.select(fieldsLoadedSelector)
+  fields$ = this.store.select(selectFields)
+  fieldsLoading$ = this.store.select(selectFieldsLoading)
+  fieldsError$ = this.store.select(selectFieldsError)
 
   constructor(private store: Store) { }
 
@@ -36,8 +36,12 @@ export class FormBuilderComponent {
     this.store.dispatch(getFields())
     this.fields$
       .pipe(
-        map((fields) => JSON.parse(JSON.stringify(fields))),
-        map((item) => item.forEach((elem: Field) => { this.listElements.push(elem.type), this.styles = { ...this.styles, [elem.type]: elem.styles } })),
+        tap(() => this.listElements = [], () => this.styles = {}),
+        map((item) =>
+          item.forEach((elem: Field) => {
+            this.listElements.push(elem.type),
+              this.styles = { ...this.styles, [elem.type]: elem.styles }
+          })),
         tap(() => this.store.dispatch(selectStyles({ data: this.styles[this.elem], id: 0, index: 0 }))),
         takeUntil(this.destroy),
       ).subscribe()
@@ -59,7 +63,8 @@ export class FormBuilderComponent {
       this.id++
       this.store.dispatch(addFormElement({ data: { id: this.id, type: this.elem, styles: [] }, index: this.currentIndex }))
       if (this.listElements.length === 4) {
-        this.listElements = [...this.listElements.slice(0, this.previousIndex), this.elem, ...this.listElements.slice(this.previousIndex, this.listElements.length)]
+        this.listElements = [...this.listElements.slice(0, this.previousIndex),
+        this.elem, ...this.listElements.slice(this.previousIndex, this.listElements.length)]
       }
       this.store.dispatch(selectStyles({ data: this.styles[this.elem], id: this.id, index: this.currentIndex }))
 

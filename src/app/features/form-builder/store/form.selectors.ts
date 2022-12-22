@@ -4,52 +4,52 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector = createFeatureSelector<FormState>(form)
 
-export const fieldsSelector = createSelector(
+export const selectFields = createSelector(
   featureSelector,
   state => state.fields
 );
 
-export const fieldsLoadingSelector = createSelector(
+export const selectFieldsLoading = createSelector(
   featureSelector,
-  state => state.fieldsLoading && !state.fieldsLoaded
+  state => state.fieldsLoading
 );
 
-export const fieldsLoadedSelector = createSelector(
+export const selectFieldsError = createSelector(
   featureSelector,
-  state => !state.fieldsLoading && state.fieldsLoaded
+  state => state.fieldsError
 );
 
-export const borderTypesSelector = createSelector(
+export const selectBorderTypes = createSelector(
   featureSelector,
   state => state.borderTypes
 );
 
-export const borderTypesLoadingSelector = createSelector(
+export const selectBorderTypesLoading = createSelector(
   featureSelector,
-  state => state.borderTypesLoading && !state.borderTypesLoaded
+  state => state.borderTypesLoading
 );
 
-export const borderTypesLoadedSelector = createSelector(
+export const selectBorderTypesError = createSelector(
   featureSelector,
-  state => !state.borderTypesLoading && state.borderTypesLoaded
+  state => state.borderTypesError
 );
 
-export const selectedStylesSelector = createSelector(
+export const selectSelectedStyles = createSelector(
   featureSelector,
   state => state.selectedStyles
 );
 
-export const formStylesSelector = createSelector(
+export const selectFormStyles = createSelector(
   featureSelector,
   state => state.formStyles
 );
 
-export const selectedElementsSelector = createSelector(
+export const selectSelectedElements = createSelector(
   featureSelector,
   state => state.selectedElements
 )
 
-export const selectedItemIdSelector = createSelector(
+export const selectSelectedItemId = createSelector(
   featureSelector,
   state => state.selectedItemId
 )

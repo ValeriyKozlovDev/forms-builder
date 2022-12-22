@@ -6,7 +6,10 @@ import { AuthGuard } from './features/login/guards/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', loadChildren: () => import('./features/login/login.module').then(module => module.LoginModule) },
-  { path: 'main', loadChildren: () => import('./features/form-builder/form-builder.module').then(module => module.FormBuilderModule), canActivate: [AuthGuard] },
+  {
+    path: 'main', loadChildren: () => import('./features/form-builder/form-builder.module')
+      .then(module => module.FormBuilderModule), canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

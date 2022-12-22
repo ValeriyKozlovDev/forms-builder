@@ -1,8 +1,19 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 import { FormElement } from '../../store/interfaces';
-import { formStylesSelector, selectedElementsSelector, selectedItemIdSelector } from '../../store/form.selectors';
+import {
+  selectFormStyles,
+  selectSelectedElements,
+  selectSelectedItemId
+} from '../../store/form.selectors';
 import { selectStyles } from '../../store/form.actions';
 
 @Component({
@@ -18,9 +29,9 @@ export class FormElementsComponent implements OnInit {
   selectedElement!: number
 
 
-  formStyles$ = this.store.select(formStylesSelector)
-  formElements$ = this.store.select(selectedElementsSelector)
-  selectedElement$ = this.store.select(selectedItemIdSelector)
+  formStyles$ = this.store.select(selectFormStyles)
+  formElements$ = this.store.select(selectSelectedElements)
+  selectedElement$ = this.store.select(selectSelectedItemId)
 
   @Input() selectedElements!: string[]
   @Input() styles!: any

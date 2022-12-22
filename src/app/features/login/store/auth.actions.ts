@@ -1,11 +1,17 @@
 import { createAction, props } from '@ngrx/store';
 
 export enum FormActions {
-  changeFlag = '[AUTH] change login again flag',
+  changeAccessFlag = '[AUTH] change login again flag',
+  setLoading = '[AUTH] set loading',
 }
 
-export const changeFlag = createAction(
-  FormActions.changeFlag,
+export const changeAccessFlag = createAction(
+  FormActions.changeAccessFlag,
+  props<{ data: boolean }>()
+);
+
+export const setLoading = createAction(
+  FormActions.setLoading,
   props<{ data: boolean }>()
 );
 

@@ -47,9 +47,11 @@
           in</button>
         <button *ngIf="haveAcc===false" mat-raised-button color="primary"
           [disabled]="formGroup.invalid || !!formError || submitted" class="login-form__submit">Sing Up</button>
-
         <mat-error *ngIf="formError">{{formError}}</mat-error>
       </div>
     </form>
+  </div>
+  <div *ngIf="loading$ | async">
+    <app-loader></app-loader>
   </div>
 </div>

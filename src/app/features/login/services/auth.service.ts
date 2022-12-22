@@ -1,3 +1,5 @@
+import { setLoading } from './../store/auth.actions';
+import { Store } from '@ngrx/store';
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, Observable, Subject, tap, throwError } from "rxjs";
@@ -6,7 +8,7 @@ import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private store: Store) { }
 
   public error$: Subject<string> = new Subject<string>()
 
@@ -46,6 +48,7 @@ export class AuthService {
 
   private handleError(error: HttpErrorResponse) {
     const { message } = error.error.error
+    this.store.dispatch(setLoading({ data: false }))
     switch (message) {
       case 'INVALID_EMAIL':
         this.error$.next('Wrong email')

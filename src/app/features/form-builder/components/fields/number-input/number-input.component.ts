@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self, OnI
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ReplaySubject, tap, takeUntil } from 'rxjs';
-import { selectedStylesSelector } from '../../../store/form.selectors';
+import { selectSelectedStyles } from '../../../store/form.selectors';
 import { BaseField } from 'src/app/shared/directives/base-field.directive';
 
 @Component({
@@ -21,7 +21,7 @@ export class NumberInputComponent implements ControlValueAccessor, BaseField, On
   private onChange!: (value: string) => void;
   private onTouched!: () => void;
 
-  selectedStyles$ = this.store.select(selectedStylesSelector)
+  selectedStyles$ = this.store.select(selectSelectedStyles)
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 

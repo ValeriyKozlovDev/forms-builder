@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { borderTypesSelector } from '../../../store/form.selectors';
+import { selectBorderTypes } from '../../../store/form.selectors';
 import { applyFormStyles } from '../../../store/form.actions';
 
 @Component({
@@ -12,7 +12,7 @@ import { applyFormStyles } from '../../../store/form.actions';
 export class GeneralFormStylesComponent implements OnInit {
 
   generalForm!: FormGroup
-  borderTypes$ = this.store.select(borderTypesSelector)
+  borderTypes$ = this.store.select(selectBorderTypes)
   selectedValue!: string;
 
   constructor(private store: Store) { }

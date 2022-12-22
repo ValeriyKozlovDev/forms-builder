@@ -8,3 +8,7 @@ export const selectLoginAgain = createSelector(
   featureSelector,
   state => state.loginAgain
 );
+export const selectLoading = createSelector(
+  featureSelector,
+  state => state.loading
+);

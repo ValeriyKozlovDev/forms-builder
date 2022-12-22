@@ -5,10 +5,10 @@ export enum FormActions {
 
   GetFields = '[FORM] get fields',
   GetFieldsSuccess = '[FORM] get fields success',
-  GetFieldsFailed = '[FORM] get fields failed',
+  GetFieldsError = '[FORM] get fields error',
   GetBorderTypes = '[FORM] get border types',
   GetBorderTypesSuccess = '[FORM] get border types success',
-  GetBorderTypesFailed = '[FORM] get border types failed',
+  GetBorderTypesError = '[FORM] get border types error',
   SelectStyles = '[FORM] select styles',
   ApplyFormStyles = '[FORM] apply form styles',
   ApplyElementStyles = '[FORM] apply element styles',
@@ -23,8 +23,8 @@ export const getFieldsSuccess = createAction(
   props<{ data: Field[] }>()
 );
 
-export const getFieldsFailed = createAction(
-  FormActions.GetFieldsFailed,
+export const getFieldsError = createAction(
+  FormActions.GetFieldsError,
   props<{ err: any }>());
 
 
@@ -35,8 +35,8 @@ export const getBorderTypesSuccess = createAction(
   props<{ data: string[] }>()
 );
 
-export const getBorderTypesFailed = createAction(
-  FormActions.GetBorderTypesFailed,
+export const getBorderTypesError = createAction(
+  FormActions.GetBorderTypesError,
   props<{ err: any }>()
 );
 

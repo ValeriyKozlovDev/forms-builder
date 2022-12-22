@@ -1,8 +1,9 @@
+import { selectBorderTypesLoading, selectBorderTypesError } from './../../../store/form.selectors';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { tap, ReplaySubject, takeUntil } from 'rxjs';
-import { selectedStylesSelector, borderTypesSelector } from '../../../store/form.selectors';
+import { selectSelectedStyles, selectBorderTypes } from '../../../store/form.selectors';
 import { applyElementStyles, deleteElement } from '../../../store/form.actions';
 
 @Component({
@@ -15,8 +16,10 @@ export class ElementsStylesComponent implements OnInit {
   elementsForm!: FormGroup
   selectedValue!: string;
 
-  selectedStyles$ = this.store.select(selectedStylesSelector)
-  borderTypes$ = this.store.select(borderTypesSelector)
+  selectedStyles$ = this.store.select(selectSelectedStyles)
+  borderTypes$ = this.store.select(selectBorderTypes)
+  borderTypesLoading$ = this.store.select(selectBorderTypesLoading)
+  borderTypesError$ = this.store.select(selectBorderTypesError)
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 

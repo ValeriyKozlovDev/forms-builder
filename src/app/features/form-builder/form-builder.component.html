@@ -15,9 +15,12 @@
 
     <mat-grid-tile>
       <div *ngIf="fieldsLoading$ | async">
-        <app-loader></app-loader>
+        <app-loader class="loader"></app-loader>
       </div>
-      <app-list-elements *ngIf="fieldsLoaded$ | async" (toDrop)="drop($event)" [listElements]="listElements"
+      <div *ngIf="fieldsError$| async as error">
+        <mat-error>{{error}}</mat-error>
+      </div>
+      <app-list-elements *ngIf="!(fieldsLoading$ | async)" (toDrop)="drop($event)" [listElements]="listElements"
         class="form-block"></app-list-elements>
     </mat-grid-tile>
 

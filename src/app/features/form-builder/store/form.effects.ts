@@ -14,7 +14,7 @@ export class FormEffects {
     switchMap(() => this.formService.getFields()
       .pipe(
         map(fields => ({ type: FormActions.GetFieldsSuccess, data: fields })),
-        catchError(() => of({ type: FormActions.GetFieldsFailed, err: 'err' }))
+        catchError(() => of({ type: FormActions.GetFieldsError, err: 'err' }))
       ))
   ))
 
@@ -23,7 +23,7 @@ export class FormEffects {
     switchMap(() => this.formService.getBorderTypes()
       .pipe(
         map(borderTypes => ({ type: FormActions.GetBorderTypesSuccess, data: borderTypes })),
-        catchError(() => of({ type: FormActions.GetBorderTypesFailed, err: 'err' }))
+        catchError(() => of({ type: FormActions.GetBorderTypesError, err: 'err' }))
       ))
   ))
 
