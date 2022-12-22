@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './services/auth.guard';
-import { MainComponent } from './components/main/main.component';
-import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './features/login/guards/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'main', component: MainComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', loadChildren: () => import('./features/login/login.module').then(module => module.LoginModule) },
+  { path: 'main', loadChildren: () => import('./features/form-builder/form-builder.module').then(module => module.FormBuilderModule), canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -16,4 +15,3 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule { }
-// , canActivate: [AuthGuard]
