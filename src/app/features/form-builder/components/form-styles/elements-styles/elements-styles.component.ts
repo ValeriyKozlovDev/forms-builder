@@ -1,3 +1,4 @@
+import { addSelectOption } from './../../../store/form.actions';
 import { selectBorderTypesLoading, selectBorderTypesError } from './../../../store/form.selectors';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -39,13 +40,22 @@ export class ElementsStylesComponent implements OnInit {
       backgroundColor: new FormControl(''),
       borderType: new FormControl(''),
       borderColor: new FormControl(''),
-      color: new FormControl('')
+      color: new FormControl(''),
+      option: new FormControl('')
     })
     this.selectedStyles$
       .pipe(
         tap(() => this.elementsForm.reset()),
         takeUntil(this.destroy),
       ).subscribe()
+  }
+
+  addOption() {
+    let option = this.elementsForm.value.option
+    if (option) {
+      this.store.dispatch(addSelectOption({ data: option }))
+      this.elementsForm.value.option = ''
+    }
   }
 
   applyElementsStyles(): void {

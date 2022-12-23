@@ -11,6 +11,7 @@ export enum FormActions {
   GetBorderTypesError = '[FORM] get border types error',
   SelectStyles = '[FORM] select styles',
   ApplyFormStyles = '[FORM] apply form styles',
+  AddSelectOption = '[FORM] add select option',
   ApplyElementStyles = '[FORM] apply element styles',
   AddFormElement = '[FORM] add form element',
   DeleteElement = '[FORM] delete element'
@@ -48,6 +49,11 @@ export const selectStyles = createAction(
 export const applyFormStyles = createAction(
   FormActions.ApplyFormStyles,
   props<{ data: FormStyles }>()
+)
+
+export const addSelectOption = createAction(
+  FormActions.AddSelectOption,
+  props<{ data: string }>()
 )
 
 export const addFormElement = createAction(

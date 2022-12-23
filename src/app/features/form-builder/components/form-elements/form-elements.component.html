@@ -1,18 +1,19 @@
-<div *ngIf="formStyles$ | async as formStyles">
-  <div [ngStyle]="formStyles | style" class="selected-form wrapper">
-    <div *ngIf="formStyles.label; else noName" class="text text_middle selected-form__label">{{formStyles.label}}</div>
-    <ng-template #noName>
-      <div class="text text_middle selected-form__label">Form Label
+<div *ngIf="formElements$ | async as formElements">
+  <div *ngIf="formStyles$ | async as formStyles">
+    <div [ngStyle]="formStyles | style" class="selected-form wrapper" [ngClass]="{'overflow': formElements.length > 4}">
+      <div *ngIf="formStyles.label; else noName" class="text text_middle selected-form__label">{{formStyles.label}}
       </div>
-    </ng-template>
+      <ng-template #noName>
+        <div class="text text_middle selected-form__label">Form Label
+        </div>
+      </ng-template>
 
-    <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list" cdkDropListDisabled
-      (cdkDropListDropped)="drop($event)">
-      <div *ngIf="formElements$ | async as formElements">
+      <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list" cdkDropListDisabled
+        (cdkDropListDropped)="drop($event)">
         <div class="text selected-form__elems" *ngFor="let item of formElements; let i = index" cdkDrag>
           <div [ngClass]="{'selected': selectedElement === item.id}" class="border" (click)="(selectElement(item, i))">
             <div *ngIf="item.type === 'input'" class="selected-form__input">
-              <!-- <input *cdkDragPlaceholder type="text" value="input"> -->
+              <input *cdkDragPlaceholder type="text" value="input">
               <input [ngStyle]="item.styles | style" type="text" value="{{itemDetails(item).value}}"
                 placeholder="{{itemDetails(item).placeholder}}">
             </div>
@@ -30,12 +31,13 @@
             <div *ngIf="item.type === 'select'" class="selected-form__select">
               <select [ngStyle]="item.styles | style">
                 <option value="" disabled selected>{{itemDetails(item).value}}</option>
+                <option *ngFor="let option of item.styles.options">{{option}}</option>
               </select>
             </div>
           </div>
         </div>
       </div>
+      <div class="button-container"><button mat-raised-button class="button">Save form</button></div>
     </div>
-    <div class="button-container"><button mat-raised-button class="button">Save form</button></div>
   </div>
 </div>

@@ -11,7 +11,8 @@ import {
   applyFormStyles,
   addFormElement,
   applyElementStyles,
-  deleteElement
+  deleteElement,
+  addSelectOption
 } from './form.actions';
 
 export const form = 'form';
@@ -45,7 +46,24 @@ export const initialState: FormState = {
     borderColor: '',
     borderType: ''
   },
-  selectedElements: [{ id: 0, type: 'input', styles: {} }],
+  selectedElements: [{
+    id: 0, type: 'input', styles: {
+      label: '',
+      textColor: '',
+      placeholder: '',
+      width: NaN,
+      height: NaN,
+      fontSize: NaN,
+      fontWeight: NaN,
+      required: false,
+      colorInput: '',
+      backgroundColor: '',
+      borderType: '',
+      borderColor: '',
+      color: '',
+      options: []
+    }
+  }],
   selectedItemId: 0,
   selectedItemIndex: 0
 };
@@ -102,6 +120,17 @@ export const formReducer = createReducer(
     {
       ...state.selectedElements[state.selectedItemIndex],
       ['styles']: action.data
+    }, ...state.selectedElements.slice(state.selectedItemIndex + 1, state.selectedElements.length)]
+  })),
+  on(addSelectOption, (state, action) => ({
+    ...state,
+    selectedElements: [...state.selectedElements.slice(0, state.selectedItemIndex),
+    {
+      ...state.selectedElements[state.selectedItemIndex],
+      ['styles']: {
+        ...state.selectedElements[state.selectedItemIndex]['styles'],
+        ['options']: [...(state.selectedElements[state.selectedItemIndex]['styles']['options']) || [], action.data]
+      }
     }, ...state.selectedElements.slice(state.selectedItemIndex + 1, state.selectedElements.length)]
   })),
   on(deleteElement, state => ({

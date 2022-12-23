@@ -14,7 +14,7 @@ export class FormEffects {
     switchMap(() => this.formService.getFields()
       .pipe(
         map(fields => ({ type: FormActions.GetFieldsSuccess, data: fields })),
-        catchError(() => of({ type: FormActions.GetFieldsError, err: 'err' }))
+        catchError(() => of({ type: FormActions.GetFieldsError, err: 'Can`t get fields for form, check your internet connection' }))
       ))
   ))
 
@@ -23,7 +23,7 @@ export class FormEffects {
     switchMap(() => this.formService.getBorderTypes()
       .pipe(
         map(borderTypes => ({ type: FormActions.GetBorderTypesSuccess, data: borderTypes })),
-        catchError(() => of({ type: FormActions.GetBorderTypesError, err: 'err' }))
+        catchError(() => of({ type: FormActions.GetBorderTypesError, err: 'Can`t get border types, check your internet connection' }))
       ))
   ))
 

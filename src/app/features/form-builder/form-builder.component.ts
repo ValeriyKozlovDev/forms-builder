@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Field } from './store/interfaces';
+import { Field, Styles } from './store/interfaces';
 import { Store } from '@ngrx/store';
 import { tap, ReplaySubject, takeUntil } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { getFields, addFormElement, selectStyles } from './store/form.actions';
-import { selectFields, selectFieldsLoading, selectFieldsError } from './store/form.selectors';
+import { selectFields } from './store/form.selectors';
 
 @Component({
   selector: 'app-form-builder',
@@ -27,8 +27,6 @@ export class FormBuilderComponent {
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   fields$ = this.store.select(selectFields)
-  fieldsLoading$ = this.store.select(selectFieldsLoading)
-  fieldsError$ = this.store.select(selectFieldsError)
 
   constructor(private store: Store) { }
 
@@ -61,7 +59,7 @@ export class FormBuilderComponent {
         event.currentIndex,
       );
       this.id++
-      this.store.dispatch(addFormElement({ data: { id: this.id, type: this.elem, styles: [] }, index: this.currentIndex }))
+      this.store.dispatch(addFormElement({ data: { id: this.id, type: this.elem, styles: {} }, index: this.currentIndex }))
       if (this.listElements.length === 4) {
         this.listElements = [...this.listElements.slice(0, this.previousIndex),
         this.elem, ...this.listElements.slice(this.previousIndex, this.listElements.length)]

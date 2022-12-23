@@ -1,14 +1,15 @@
 <form [formGroup]="elementsForm" (ngSubmit)="applyElementsStyles()">
-
   <div *ngIf="selectedStyles$ | async as selectedStyles" class="style__container">
+
     <div *ngIf="borderTypesLoading$ | async">
       <app-loader></app-loader>
     </div>
+
     <div *ngIf="borderTypesError$ | async as error">
       <mat-error>{{error}}</mat-error>
     </div>
-    <div *ngIf="!(borderTypesLoading$ | async)">
 
+    <div *ngIf="!(borderTypesLoading$ | async)">
       <div *ngFor="let style of selectedStyles; let i = index" class="style">
 
         <div *ngIf="style === 'label' || style === 'placeholder'">
@@ -43,11 +44,11 @@
             </app-selector>
           </div>
         </div>
+      </div>
 
-        <div *ngIf="style === 'required'">
-          <app-checkbox [label]="'Required'" [formControlName]="'required'">
-          </app-checkbox>
-        </div>
+      <div class="required">
+        <app-checkbox [label]="'Required field'" [formControlName]="'required'">
+        </app-checkbox>
       </div>
     </div>
 
@@ -57,9 +58,24 @@
           <button class="button" type="submit" mat-raised-button>Apply</button>
         </mat-grid-tile>
         <mat-grid-tile>
-          <button class="button" (click)="delete()" mat-raised-button>Delete</button>
+          <button class="button" type="button" (click)="delete()" mat-raised-button>Delete</button>
         </mat-grid-tile>
       </mat-grid-list>
     </div>
+
+
+    <div *ngIf="selectedStyles.indexOf('options') != -1" class="style-container">
+      <mat-grid-list cols="5" rowHeight="70px">
+        <mat-grid-tile [colspan]="4">
+          <app-text-input class="option" [label]="'Add field'" [formControlName]="'option'"></app-text-input>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1">
+          <div class="add-option">
+            <button (click)="addOption()" type="button" class="add-option__button" mat-raised-button>Add</button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
   </div>
 </form>

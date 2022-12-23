@@ -1,5 +1,5 @@
 <app-header></app-header>
-<mat-grid-list cols="3" rowHeight="1000px" class="main">
+<mat-grid-list cols="3" rowHeight="700px" class="main">
 
   <mat-grid-tile>
     <app-form-styles class="form-block"></app-form-styles>
@@ -14,14 +14,7 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <div *ngIf="fieldsLoading$ | async">
-        <app-loader class="loader"></app-loader>
-      </div>
-      <div *ngIf="fieldsError$| async as error">
-        <mat-error>{{error}}</mat-error>
-      </div>
-      <app-list-elements *ngIf="!(fieldsLoading$ | async)" (toDrop)="drop($event)" [listElements]="listElements"
-        class="form-block"></app-list-elements>
+      <app-list-elements (toDrop)="drop($event)" [listElements]="listElements" class="form-block"></app-list-elements>
     </mat-grid-tile>
 
   </div>

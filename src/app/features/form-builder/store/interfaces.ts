@@ -21,5 +21,22 @@ export interface FormStyles {
 export interface FormElement {
   id: number
   type: string,
-  styles: {}
+  styles: Styles
+}
+
+export interface Styles {
+  label?: string,
+  textColor?: string,
+  placeholder?: string,
+  width?: number,
+  height?: number,
+  fontSize?: number,
+  fontWeight?: number,
+  required?: boolean,
+  colorInput?: string,
+  backgroundColor?: string,
+  borderType?: string,
+  borderColor?: string,
+  color?: string,
+  options?: string[]
 }
