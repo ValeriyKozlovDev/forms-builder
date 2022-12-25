@@ -25,7 +25,7 @@ export class StylesPipe implements PipeTransform {
         newObj = { ...newObj, ['font-size']: styles['fontSize'] + 'px' }
 
       } else if (key === 'fontWeight') {
-        newObj = { ...newObj, ['font-weight']: styles['fontWeight'] }
+        newObj = { ...newObj, ['font-weight']: styles['fontWeight'] + '00' }
 
       } else if (key === 'colorInput') {
         newObj = { ...newObj, ['color']: styles['colorInput'] }

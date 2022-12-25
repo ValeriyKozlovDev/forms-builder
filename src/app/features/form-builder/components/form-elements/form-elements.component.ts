@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -15,6 +16,7 @@ import {
   selectSelectedItemId
 } from '../../store/form.selectors';
 import { selectStyles } from '../../store/form.actions';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form-elements',
@@ -27,7 +29,8 @@ export class FormElementsComponent implements OnInit {
 
   labelName: string = 'Form label';
   selectedElement!: number
-
+  form!: FormGroup
+  obj!: {}
 
   formStyles$ = this.store.select(selectFormStyles)
   formElements$ = this.store.select(selectSelectedElements)
@@ -44,6 +47,21 @@ export class FormElementsComponent implements OnInit {
       .pipe(
         tap((id) => this.selectedElement = id)
       ).subscribe()
+    this.form = new FormGroup({
+      ...this.obj
+    })
+    this.formElements$
+      .pipe(
+        tap(() => this.form = new FormGroup({})),
+        map(array => array.forEach(elem => {
+          if (elem.styles.required) {
+            this.form.addControl(
+              `${elem.id}`, new FormControl(`${(elem.type)[0].toUpperCase() + (elem.type).slice(1)} label`, Validators.required))
+          } else this.form.addControl(`${elem.id}`, new FormControl(`${(elem.type)[0].toUpperCase() + (elem.type).slice(1)} label`))
+        })),
+
+      ).subscribe()
+
   }
 
   drop(event: any) {
@@ -70,5 +88,7 @@ export class FormElementsComponent implements OnInit {
     return { value: value, placeholder: placeholder, required: required }
   }
 
-
+  saveForm() {
+    console.log(this.form)
+  }
 }

@@ -44,15 +44,14 @@
             </app-selector>
           </div>
         </div>
-      </div>
 
-      <div class="required">
-        <app-checkbox [label]="'Required field'" [formControlName]="'required'">
-        </app-checkbox>
       </div>
     </div>
-
-    <div class="submit-styles">
+    <div *ngIf="selectedStyles.includes('required')" class="required">
+      <app-checkbox [label]="'Required field'" [formControlName]="'required'">
+      </app-checkbox>
+    </div>
+    <div *ngIf="selectedStyles.length > 0" class="submit-styles">
       <mat-grid-list cols="2" rowHeight="100px">
         <mat-grid-tile>
           <button class="button" type="submit" mat-raised-button>Apply</button>
@@ -62,7 +61,6 @@
         </mat-grid-tile>
       </mat-grid-list>
     </div>
-
 
     <div *ngIf="selectedStyles.indexOf('options') != -1" class="style-container">
       <mat-grid-list cols="5" rowHeight="70px">
@@ -76,6 +74,5 @@
         </mat-grid-tile>
       </mat-grid-list>
     </div>
-
   </div>
 </form>

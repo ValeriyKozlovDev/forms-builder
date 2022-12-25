@@ -19,17 +19,18 @@ export class GeneralFormStylesComponent implements OnInit {
 
   ngOnInit(): void {
     this.generalForm = new FormGroup({
-      label: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-      textColor: new FormControl('', [Validators.required]),
-      backgroundColor: new FormControl('', [Validators.required]),
-      borderType: new FormControl('', [Validators.required]),
-      borderColor: new FormControl('', [Validators.required]),
+      label: new FormControl('', [Validators.maxLength(50)]),
+      textColor: new FormControl('', []),
+      backgroundColor: new FormControl('', []),
+      borderType: new FormControl('', []),
+      borderColor: new FormControl('', []),
     })
   }
 
 
   applyFormStyles(): void {
     if (this.generalForm.valid) {
+      console.log(this.generalForm)
       const formData = { ...this.generalForm.value }
       this.store.dispatch(applyFormStyles({ data: formData }))
     }

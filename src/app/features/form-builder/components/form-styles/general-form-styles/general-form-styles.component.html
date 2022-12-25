@@ -1,6 +1,9 @@
 <form [formGroup]="generalForm" (ngSubmit)="applyFormStyles()">
-
+  <div class="validation" *ngIf="generalForm.get('label')?.invalid">
+    <mat-error>this field length must not be more then 50 symbols</mat-error>
+  </div>
   <app-text-input [label]="'Form label'" [formControlName]="'label'"></app-text-input>
+
 
   <div class="style-container">
 
