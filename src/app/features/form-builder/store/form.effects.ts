@@ -1,3 +1,5 @@
+import { authInitialState } from './../../login/store/auth.reducer';
+import { formInitialState } from './form.reducer';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, of, switchMap } from 'rxjs';
@@ -7,7 +9,6 @@ import { FormService } from 'src/app/features/form-builder/services/form.service
 
 @Injectable()
 export class FormEffects {
-
 
   getFields$ = createEffect(() => this.actions$.pipe(
     ofType(FormActions.GetFields),
@@ -27,8 +28,17 @@ export class FormEffects {
       ))
   ))
 
+  saveForm$ = createEffect(() => this.actions$.pipe(
+    ofType(FormActions.SaveForm),
+    switchMap((data) => this.formService.saveForm(data)
+      .pipe(
+        map(response => ({ type: FormActions.SaveFormSuccess, data: response })),
+        catchError(() => of({ type: FormActions.SaveFormError, err: 'Form don`t saved' }))
+      )
+    )
+  ))
   constructor(
     private actions$: Actions,
-    private formService: FormService
+    private formService: FormService,
   ) { }
 }

@@ -1,3 +1,4 @@
+import { Styles } from './../../features/form-builder/store/interfaces';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
@@ -6,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class StylesPipe implements PipeTransform {
 
-  transform(styles: any): any {
+  transform(styles: Styles): Object {
     let newObj = {}
     let keys = Object.keys(styles)
     for (let key of keys) {
@@ -40,8 +41,7 @@ export class StylesPipe implements PipeTransform {
         newObj = { ...newObj, ['color']: styles['color'] }
       }
     }
-    console.log("oldObj", styles)
-    console.log("newObj", newObj)
+
     return newObj;
   }
 

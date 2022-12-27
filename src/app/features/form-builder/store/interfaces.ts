@@ -1,3 +1,20 @@
+export interface FormState {
+  fields: Field[];
+  fieldsLoading: boolean
+  fieldsError: string
+  savingLoading: boolean,
+  savingError: string,
+  savingSuccess: boolean,
+  borderTypes: string[],
+  borderTypesLoading: boolean,
+  borderTypesError: string,
+  selectedStyles: string[],
+  formStyles: FormStyles,
+  selectedElements: FormElement[],
+  selectedItemId: number,
+  selectedItemIndex: number
+}
+
 export interface BorderType {
   value: string;
   viewValue: string;
@@ -16,7 +33,6 @@ export interface FormStyles {
   borderColor: string,
   borderType: string
 }
-
 
 export interface FormElement {
   id: number
@@ -39,4 +55,19 @@ export interface Styles {
   borderColor?: string,
   color?: string,
   options?: string[]
+}
+
+export interface FieldsStyles {
+  input?: string[],
+  textarea?: string[],
+  checkbox?: string[],
+  select?: string[],
+  button?: string[]
+}
+
+export interface SavedForm {
+  userLogin: string,
+  formStyles: FormStyles,
+  formElements: Styles,
+  type?: string
 }

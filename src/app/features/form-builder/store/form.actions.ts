@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Field, FormStyles, FormElement } from './interfaces';
+import { Field, FormStyles, FormElement, Styles } from './interfaces';
 
 export enum FormActions {
 
@@ -14,7 +14,10 @@ export enum FormActions {
   AddSelectOption = '[FORM] add select option',
   ApplyElementStyles = '[FORM] apply element styles',
   AddFormElement = '[FORM] add form element',
-  DeleteElement = '[FORM] delete element'
+  DeleteElement = '[FORM] delete element',
+  SaveForm = '[FORM] save form',
+  SaveFormSuccess = '[FORM] save form success',
+  SaveFormError = '[FORM] save form error'
 }
 
 export const getFields = createAction(FormActions.GetFields);
@@ -26,7 +29,7 @@ export const getFieldsSuccess = createAction(
 
 export const getFieldsError = createAction(
   FormActions.GetFieldsError,
-  props<{ err: any }>());
+  props<{ err: string }>());
 
 
 export const getBorderTypes = createAction(FormActions.GetBorderTypes);
@@ -38,7 +41,7 @@ export const getBorderTypesSuccess = createAction(
 
 export const getBorderTypesError = createAction(
   FormActions.GetBorderTypesError,
-  props<{ err: any }>()
+  props<{ err: string }>()
 );
 
 export const selectStyles = createAction(
@@ -62,8 +65,23 @@ export const addFormElement = createAction(
 )
 export const applyElementStyles = createAction(
   FormActions.ApplyElementStyles,
-  props<{ data: any }>()
+  props<{ data: Styles }>()
 )
 export const deleteElement = createAction(
   FormActions.DeleteElement
 )
+
+export const saveForm = createAction(
+  FormActions.SaveForm,
+  props<{ userLogin: string, formStyles: FormStyles, formElements: FormElement[] }>()
+)
+
+export const saveFormSuccess = createAction(
+  FormActions.SaveForm
+)
+
+export const saveFormError = createAction(
+  FormActions.SaveForm,
+  props<{ err: string }>()
+)
+

@@ -13,7 +13,7 @@ export abstract class BaseField {
   writeValue(value: string): void {
   }
 
-  registerOnChange(fn: (value: any) => void): void { }
+  registerOnChange(fn: (value: string | boolean) => void): void { }
 
   registerOnTouched(fn: () => void): void {
   }

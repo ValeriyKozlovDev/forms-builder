@@ -1,10 +1,12 @@
-import { FormState, formReducer } from '../features/form-builder/store/form.reducer';
-import { AuthState, authReducer } from '../features/login/store/auth.reducer';
+import { AuthState } from './../features/login/store/interfaces';
+import { formReducer } from '../features/form-builder/store/form.reducer';
+import { authReducer } from '../features/login/store/auth.reducer';
 import { isDevMode } from '@angular/core';
 import {
   ActionReducerMap,
   MetaReducer
 } from '@ngrx/store';
+import { FormState } from '../features/form-builder/store/interfaces';
 
 export interface State {
   form: FormState;

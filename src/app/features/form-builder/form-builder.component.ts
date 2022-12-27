@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Field, Styles } from './store/interfaces';
+import { Field, Styles, FieldsStyles } from './store/interfaces';
 import { Store } from '@ngrx/store';
 import { tap, ReplaySubject, takeUntil } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class FormBuilderComponent {
   currentIndex!: number
   elem: string = 'input'
   listElements: string[] = []
-  styles: any = {}
+  styles: FieldsStyles | any = {}
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 

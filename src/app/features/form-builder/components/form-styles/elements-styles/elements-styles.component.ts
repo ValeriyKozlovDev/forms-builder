@@ -71,8 +71,4 @@ export class ElementsStylesComponent implements OnInit {
     this.destroy.next(null);
     this.destroy.complete();
   }
-
-  cons(elem: any) {
-    console.log(elem)
-  }
 }

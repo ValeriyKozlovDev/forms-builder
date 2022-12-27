@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { ReplaySubject, takeUntil } from 'rxjs';
 import { selectLoginAgain, selectLoading } from './store/auth.selectors';
 import { User } from './store/interfaces';
-import { setLoading } from './store/auth.actions';
+import { setLoading, setUserLogin } from './store/auth.actions';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -79,6 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   signIn(user: User) {
     this.auth.login(user).pipe(takeUntil(this.destroy)).subscribe((response) => {
       this.store.dispatch(setLoading({ data: false }))
+      this.store.dispatch(setUserLogin({ data: user.email }))
       this.formGroup.reset()
       this.router.navigate(['/main'])
     }, () => {

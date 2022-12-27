@@ -1,3 +1,4 @@
+import { SavedForm } from './../store/interfaces';
 import { Field } from '../store/interfaces';
 import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -29,8 +30,14 @@ export class FormService {
       )
   }
 
-  saveForm(form: any): Observable<string[]> {
-    return this.http.post<any>(`${environment.server}savedForms`, [...form])
+  saveForm(data: SavedForm): Observable<any> {
+    console.log("a:::", data)
+
+    return this.http.post<any>(`${environment.server}savedForms`, {
+      userLogin: data.userLogin,
+      formStyles: data.formStyles,
+      formElements: data.formElements
+    })
       .pipe(
         catchError(error => {
           return throwError(error)

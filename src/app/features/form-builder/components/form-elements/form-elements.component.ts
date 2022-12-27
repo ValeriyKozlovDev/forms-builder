@@ -1,3 +1,7 @@
+import { selectSavingLoading, selectSavingError, selectSavingSuccess } from './../../store/form.selectors';
+import { selectUserLogin } from './../../../login/store/auth.selectors';
+import { saveForm } from './../../store/form.actions';
+import { FieldsStyles, FormStyles } from './../../store/interfaces';
 import { map } from 'rxjs/operators';
 import {
   Component,
@@ -19,6 +23,8 @@ import {
 import { selectStyles } from '../../store/form.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { viewLabelName } from 'src/app/shared/functions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-form-elements',
@@ -36,15 +42,19 @@ export class FormElementsComponent implements OnInit, OnDestroy {
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
+  userLogin$ = this.store.select(selectUserLogin)
   formStyles$ = this.store.select(selectFormStyles)
   formElements$ = this.store.select(selectSelectedElements)
   selectedElement$ = this.store.select(selectSelectedItemId)
+  savingLoading$ = this.store.select(selectSavingLoading)
+  savingError$ = this.store.select(selectSavingError)
+  savingSuccess$ = this.store.select(selectSavingSuccess)
 
   @Input() selectedElements!: string[]
-  @Input() styles!: any
+  @Input() styles!: FieldsStyles | any
   @Output() toDrop = new EventEmitter<any>()
 
-  constructor(private store: Store) { }
+  constructor(private store: Store, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.selectedElement$
@@ -61,7 +71,14 @@ export class FormElementsComponent implements OnInit, OnDestroy {
         map(array => array.forEach(elem => this.addControl(elem))),
         takeUntil(this.destroy),
       ).subscribe()
+
+    this.savingSuccess$
+      .pipe(
+        tap((value) => value ? this.openSnackBar() : ''),
+        takeUntil(this.destroy),
+      ).subscribe()
   }
+
 
   addControl(elem: FormElement) {
     if (elem.styles.required) {
@@ -81,7 +98,7 @@ export class FormElementsComponent implements OnInit, OnDestroy {
     this.store.dispatch(selectStyles({ data: this.styles[elem.type], id: elem.id, index: i }))
   }
 
-  itemDetails(item: any) {
+  itemDetails(item: FormElement) {
     let value = viewLabelName(item.type)
     let placeholder = ''
     if (item.styles.label) {
@@ -93,8 +110,12 @@ export class FormElementsComponent implements OnInit, OnDestroy {
     return { value: value, placeholder: placeholder }
   }
 
-  saveForm() {
-    console.log(this.form)
+  saveForm(userLogin: string, formStyles: FormStyles, formElements: FormElement[]) {
+    this.store.dispatch(saveForm({ userLogin, formStyles, formElements }))
+  }
+
+  openSnackBar() {
+    this._snackBar.open("Your form saved success!", "Ok");
   }
 
   ngOnDestroy() {

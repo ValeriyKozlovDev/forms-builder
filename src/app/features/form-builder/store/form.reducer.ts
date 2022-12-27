@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Field, FormStyles, FormElement } from './interfaces';
+import { FormState } from './interfaces';
 import {
   getFields,
   getFieldsSuccess,
@@ -12,29 +12,21 @@ import {
   addFormElement,
   applyElementStyles,
   deleteElement,
-  addSelectOption
+  addSelectOption,
+  saveForm,
+  saveFormSuccess,
+  saveFormError
 } from './form.actions';
 
 export const form = 'form';
 
-export interface FormState {
-  fields: Field[];
-  fieldsLoading: boolean
-  fieldsError: string
-  borderTypes: string[],
-  borderTypesLoading: boolean,
-  borderTypesError: string,
-  selectedStyles: string[],
-  formStyles: FormStyles,
-  selectedElements: FormElement[],
-  selectedItemId: number,
-  selectedItemIndex: number
-}
-
-export const initialState: FormState = {
+export const formInitialState: FormState = {
   fields: [],
   fieldsLoading: false,
   fieldsError: '',
+  savingLoading: false,
+  savingError: '',
+  savingSuccess: false,
   borderTypes: [],
   borderTypesLoading: false,
   borderTypesError: '',
@@ -69,7 +61,7 @@ export const initialState: FormState = {
 };
 
 export const formReducer = createReducer(
-  initialState,
+  formInitialState,
 
   on(getFields, state => ({
     ...state,
@@ -140,9 +132,21 @@ export const formReducer = createReducer(
     selectedItemIndex: NaN,
     selectedItemId: NaN,
     selectedStyles: []
-  })
-  )
-
+  })),
+  on(saveForm, (state) => ({
+    ...state,
+    savingLoading: true,
+  })),
+  on(saveFormSuccess, (state) => ({
+    ...state,
+    savingLoading: false,
+    savingSuccess: true
+  })),
+  on(saveFormError, (state, action) => ({
+    ...state,
+    savingLoading: false,
+    savingError: action.err
+  })),
 )
 
 

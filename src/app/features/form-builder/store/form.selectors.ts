@@ -1,5 +1,5 @@
 import { form } from './form.reducer';
-import { FormState } from './form.reducer';
+import { FormState } from './interfaces';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const featureSelector = createFeatureSelector<FormState>(form)
@@ -52,6 +52,20 @@ export const selectSelectedElements = createSelector(
 export const selectSelectedItemId = createSelector(
   featureSelector,
   state => state.selectedItemId
+)
+
+export const selectSavingLoading = createSelector(
+  featureSelector,
+  state => state.savingLoading
+)
+
+export const selectSavingError = createSelector(
+  featureSelector,
+  state => state.savingError
+)
+export const selectSavingSuccess = createSelector(
+  featureSelector,
+  state => state.savingSuccess
 )
 
 

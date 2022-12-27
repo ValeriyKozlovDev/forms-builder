@@ -24,6 +24,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CdkAccordionModule,
     MatDividerModule,
     SharedModule,
+    MatSnackBarModule
   ],
   providers: [
     FormService

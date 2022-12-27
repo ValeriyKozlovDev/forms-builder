@@ -30,7 +30,6 @@ export class GeneralFormStylesComponent implements OnInit {
 
   applyFormStyles(): void {
     if (this.generalForm.valid) {
-      console.log(this.generalForm)
       const formData = { ...this.generalForm.value }
       this.store.dispatch(applyFormStyles({ data: formData }))
     }

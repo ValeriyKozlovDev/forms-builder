@@ -33,8 +33,8 @@
 
         <div *ngIf="style === 'width' || style === 'height' || style === 'font size' || style === 'font weight'">
           <div class="validation" *ngIf="style.split(' ')[1] && elementsForm.get(style|nameForFormControl)?.invalid">
-            <mat-error>max value = 10</mat-error>
-            <!-- Дізнатись як отримувати динамічно значення валідатора -->
+            <mat-error>max value = {{elementsForm.get(style|nameForFormControl)?.errors!['max']['max'] }}
+            </mat-error>
           </div>
           <div class="validation" *ngIf="!style.split(' ')[1] && elementsForm.get(style)?.invalid">
             <mat-error>max value = </mat-error>

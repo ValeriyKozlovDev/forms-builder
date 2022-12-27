@@ -1,4 +1,4 @@
-import { setLoading } from './../store/auth.actions';
+import { setLoading, setUserLogin } from './../store/auth.actions';
 import { Store } from '@ngrx/store';
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
@@ -42,6 +42,7 @@ export class AuthService {
   logout() {
     this.setToken(null)
   }
+
   isAuthenticated(): boolean {
     return !!this.token
   }

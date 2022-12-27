@@ -7,7 +7,7 @@
         <div class="text text_middle selected-form__label">Form Label
         </div>
       </ng-template>
-      <form [formGroup]="form" (ngSubmit)="saveForm()">
+      <form [formGroup]="form">
         <div cdkDropList [cdkDropListData]="selectedElements" class="selected-form__list" cdkDropListDisabled
           (cdkDropListDropped)="drop($event)">
           <div class="text selected-form__elements" *ngFor="let item of formElements; let i = index" cdkDrag>
@@ -67,6 +67,13 @@
         </div>
       </form>
     </div>
-    <div class="button-container"><button mat-raised-button class="button">Save form</button></div>
+    <div *ngIf="userLogin$ | async as userLogin" class="button-container">
+      <button mat-raised-button (click)="saveForm(userLogin, formStyles, formElements)" class="button">Save
+        form</button>
+      <mat-error *ngIf="savingError$ | async as error">{{error}}</mat-error>
+    </div>
+    <div *ngIf="savingLoading$ | async">
+      <app-loader></app-loader>
+    </div>
   </div>
 </div>

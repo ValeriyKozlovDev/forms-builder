@@ -17,7 +17,7 @@ import {
 
 export class ListElementsComponent {
 
-  @Input() listElements: any
+  @Input() listElements!: string[]
   @Output() toDrop = new EventEmitter<any>()
 
   fieldsLoading$ = this.store.select(selectFieldsLoading)
