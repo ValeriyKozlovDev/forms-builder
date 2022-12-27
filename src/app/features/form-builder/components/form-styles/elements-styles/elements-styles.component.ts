@@ -1,7 +1,7 @@
 import { addSelectOption } from './../../../store/form.actions';
 import { selectBorderTypesLoading, selectBorderTypesError } from './../../../store/form.selectors';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { tap, ReplaySubject, takeUntil } from 'rxjs';
 import { selectSelectedStyles, selectBorderTypes } from '../../../store/form.selectors';
@@ -34,7 +34,7 @@ export class ElementsStylesComponent implements OnInit {
       width: new FormControl(''),
       height: new FormControl(''),
       fontSize: new FormControl(''),
-      fontWeight: new FormControl(''),
+      fontWeight: new FormControl('', Validators.max(10)),
       required: new FormControl(''),
       colorInput: new FormControl(''),
       backgroundColor: new FormControl(''),
@@ -70,5 +70,9 @@ export class ElementsStylesComponent implements OnInit {
   ngOnDestroy() {
     this.destroy.next(null);
     this.destroy.complete();
+  }
+
+  cons(elem: any) {
+    console.log(elem)
   }
 }

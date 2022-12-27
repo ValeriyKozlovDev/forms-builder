@@ -32,6 +32,13 @@
         </div>
 
         <div *ngIf="style === 'width' || style === 'height' || style === 'font size' || style === 'font weight'">
+          <div class="validation" *ngIf="style.split(' ')[1] && elementsForm.get(style|nameForFormControl)?.invalid">
+            <mat-error>max value = 10</mat-error>
+            <!-- Дізнатись як отримувати динамічно значення валідатора -->
+          </div>
+          <div class="validation" *ngIf="!style.split(' ')[1] && elementsForm.get(style)?.invalid">
+            <mat-error>max value = </mat-error>
+          </div>
           <app-number-input *ngIf="style.split(' ')[1]" [label]="style" [formControlName]="style | nameForFormControl">
           </app-number-input>
           <app-number-input *ngIf="!style.split(' ')[1]" [label]="style" [formControlName]="style">
@@ -52,9 +59,9 @@
       </app-checkbox>
     </div>
     <div *ngIf="selectedStyles.length > 0" class="submit-styles">
-      <mat-grid-list cols="2" rowHeight="100px">
+      <mat-grid-list cols="2" rowHeight="70px">
         <mat-grid-tile>
-          <button class="button" type="submit" mat-raised-button>Apply</button>
+          <button class="button" type="submit" [disabled]="elementsForm.invalid" mat-raised-button>Apply</button>
         </mat-grid-tile>
         <mat-grid-tile>
           <button class="button" type="button" (click)="delete()" mat-raised-button>Delete</button>

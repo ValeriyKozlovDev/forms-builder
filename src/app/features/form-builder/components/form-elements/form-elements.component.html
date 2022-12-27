@@ -1,7 +1,6 @@
 <div *ngIf="formElements$ | async as formElements">
   <div *ngIf="formStyles$ | async as formStyles">
-
-    <div [ngStyle]="formStyles | style" class="selected-form wrapper" [ngClass]="{'overflow': formElements.length > 6}">
+    <div [ngStyle]="formStyles | style" class="selected-form wrapper overflow">
       <div *ngIf="formStyles.label; else noName" class="text text_middle selected-form__label">{{formStyles.label}}
       </div>
       <ng-template #noName>
@@ -15,11 +14,9 @@
             <div [ngClass]="{'selected': selectedElement === item.id}" class="border"
               (click)="(selectElement(item, i))">
 
-              <div *ngIf="item.type === 'input'" class="selected-form__input">
-                <input *cdkDragPlaceholder type="text" value="input">
-                <app-loader *cdkDragPlaceholder></app-loader>
-                <input [ngStyle]="item.styles | style" type="text" value="{{itemDetails(item).value}}"
-                  placeholder="{{itemDetails(item).placeholder}}" formControlName="{{item.id}}">
+              <div *ngIf=" item.type==='input'" class=" selected-form__input">
+                <input [ngStyle]="item.styles | style" type="text" placeholder="{{itemDetails(item).placeholder}}"
+                  formControlName="{{item.id}}">
                 <div class="validation"
                   *ngIf="form.get((item.id).toString())?.invalid && form.get((item.id).toString())?.touched">
                   <mat-error>this field must not be empty</mat-error>
@@ -27,13 +24,12 @@
               </div>
 
               <div *ngIf="item.type === 'button'" class="selected-form__button">
-                <button [ngStyle]="item.styles | style">{{itemDetails(item).value}}</button>
+                <button [ngStyle]="item.styles | style" [disabled]="form.invalid">{{itemDetails(item).value}}</button>
               </div>
 
               <div *ngIf="item.type === 'textarea'" class="selected-form__textarea">
                 <textarea [ngStyle]="item.styles | style" name="" id="" cols="30" rows="5"
-                  value="{{itemDetails(item).value}}" placeholder="{{itemDetails(item).placeholder}}"
-                  formControlName="{{item.id}}">textarea</textarea>
+                  placeholder="{{itemDetails(item).placeholder}}" formControlName="{{item.id}}"></textarea>
                 <div class="validation"
                   *ngIf="form.get((item.id).toString())?.invalid && form.get((item.id).toString())?.touched">
                   <mat-error>this field must not be empty</mat-error>
@@ -45,7 +41,7 @@
                 <div *ngIf="!item.styles.label" class="text text-middle checkbox-label">Checkbox label</div>
                 <input [ngStyle]="item.styles | style" type="checkbox" id=`check{{i}}` value="option"
                   formControlName="{{item.id}}">
-                <label for=`check{{i}}`>{{itemDetails(item).value}}</label>
+                <label for=`check{{i}}`>option</label>
                 <div class="validation"
                   *ngIf="form.get((item.id).toString())?.invalid && form.get((item.id).toString())?.touched">
                   <mat-error>this field must not be empty</mat-error>
@@ -54,7 +50,10 @@
 
               <div *ngIf="item.type === 'select'" class="selected-form__select">
                 <select [ngStyle]="item.styles | style" formControlName="{{item.id}}">
-                  <option value="Select label" disabled selected>Select</option>
+                  <option *ngIf="item.styles.label" value={{item.styles.label}} disabled selected>{{item.styles.label}}
+                  </option>
+                  <option *ngIf="!item.styles.label" value="" disabled selected>Select label
+                  </option>
                   <option *ngFor="let option of item.styles.options">{{option}}</option>
                 </select>
                 <div class="validation"

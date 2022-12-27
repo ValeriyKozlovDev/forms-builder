@@ -34,13 +34,14 @@ export class StylesPipe implements PipeTransform {
         newObj = { ...newObj, ['background-color']: styles['backgroundColor'] }
 
       } else if (key === 'borderType') {
-        newObj = { ...newObj, ['border-type']: styles['borderType'] }
+        newObj = { ...newObj, ['border-style']: styles['borderType'] }
 
-      } else if (key === 'color') {
+      } else if (key === 'color' && !styles.colorInput) {
         newObj = { ...newObj, ['color']: styles['color'] }
       }
     }
-
+    console.log("oldObj", styles)
+    console.log("newObj", newObj)
     return newObj;
   }
 
