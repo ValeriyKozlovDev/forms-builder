@@ -1,17 +1,14 @@
-import { NgControl, ControlValueAccessor } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { AppModule } from './../../../../../app.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NumberInputComponent } from './number-input.component';
-import { CUSTOM_ELEMENTS_SCHEMA, Self } from '@angular/core';
 
 describe('NumberInputComponent', () => {
   let component: NumberInputComponent;
   let fixture: ComponentFixture<NumberInputComponent>;
 
-
   beforeEach(async () => {
-
 
     await TestBed.configureTestingModule({
       imports: [AppModule, NgControl],
