@@ -42,7 +42,10 @@
                 <div *ngIf="!item.styles.label" class="text text-middle checkbox-label">Checkbox label</div>
                 <input [ngStyle]="item.styles | style" type="checkbox" id=`check{{i}}` value="option"
                   formControlName="{{item.id}}">
-                <label for=`check{{i}}` [ngStyle]="item.styles | style">option</label>
+                <label *ngIf="item.styles.checkboxOption" for=`check{{i}}`
+                  [ngStyle]="item.styles | style">{{item.styles.checkboxOption}}</label>
+                <label *ngIf="!item.styles.checkboxOption" for=`check{{i}}`
+                  [ngStyle]="item.styles | style">option</label>
                 <div class="validation"
                   *ngIf="form.get((item.id).toString())?.invalid && form.get((item.id).toString())?.touched">
                   <mat-error>this field must not be empty</mat-error>

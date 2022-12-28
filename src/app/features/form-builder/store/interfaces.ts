@@ -54,7 +54,8 @@ export interface Styles {
   borderType?: string,
   borderColor?: string,
   color?: string,
-  options?: string[]
+  options?: string[],
+  checkboxOption?: string
 }
 
 export interface FieldsStyles {

@@ -12,7 +12,7 @@
     <div *ngIf="!(borderTypesLoading$ | async)">
       <div *ngFor="let style of selectedStyles; let i = index" class="style">
 
-        <div *ngIf="style === 'label' || style === 'placeholder'">
+        <div *ngIf="style === 'label' || style === 'placeholder' || style === 'checkbox option'">
           <app-text-input *ngIf="style.split(' ')[1]" [label]="style" [formControlName]="style | nameForFormControl">
           </app-text-input>
           <app-text-input *ngIf="!style.split(' ')[1]" [label]="style" [formControlName]="style">

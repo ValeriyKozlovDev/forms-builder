@@ -41,7 +41,8 @@ export class ElementsStylesComponent implements OnInit {
       borderType: new FormControl(''),
       borderColor: new FormControl(''),
       color: new FormControl(''),
-      option: new FormControl('')
+      option: new FormControl(''),
+      checkboxOption: new FormControl('')
     })
     this.selectedStyles$
       .pipe(
