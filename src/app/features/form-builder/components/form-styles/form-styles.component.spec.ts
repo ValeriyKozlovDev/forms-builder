@@ -1,3 +1,4 @@
+import { AppModule } from './../../../../app.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormStylesComponent } from './form-styles.component';
@@ -8,9 +9,10 @@ describe('FormStylesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormStylesComponent ]
+      imports: [AppModule],
+      declarations: [FormStylesComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FormStylesComponent);
     component = fixture.componentInstance;

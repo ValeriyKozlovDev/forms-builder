@@ -1,3 +1,4 @@
+import { AppModule } from './../../../../../app.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ElementsStylesComponent } from './elements-styles.component';
@@ -8,6 +9,7 @@ describe('ElementsStylesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [AppModule],
       declarations: [ElementsStylesComponent]
     })
       .compileComponents();
@@ -38,4 +40,22 @@ describe('ElementsStylesComponent', () => {
     expect(component.elementsForm.contains('option')).toBeTruthy()
     expect(component.elementsForm.contains('checkboxOption')).toBeTruthy()
   })
-});
+
+  it('should mark field as invalid if "fontWeight" field value more then 10', () => {
+
+    let fontWeight = component.elementsForm.get('fontWeight')
+
+    fontWeight?.setValue('11')
+
+    expect(fontWeight?.valid).toBeFalsy()
+  })
+
+  it('should mark field as valid if "fontWeight" field value less then 10', () => {
+
+    let fontWeight = component.elementsForm.get('fontWeight')
+
+    fontWeight?.setValue('9')
+
+    expect(fontWeight?.valid).toBeTruthy()
+  })
+})

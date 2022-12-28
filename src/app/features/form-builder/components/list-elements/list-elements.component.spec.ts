@@ -1,3 +1,4 @@
+import { AppModule } from './../../../../app.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListElementsComponent } from './list-elements.component';
@@ -8,9 +9,10 @@ describe('ListElementsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListElementsComponent ]
+      imports: [AppModule],
+      declarations: [ListElementsComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ListElementsComponent);
     component = fixture.componentInstance;

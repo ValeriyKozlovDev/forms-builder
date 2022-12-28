@@ -1,3 +1,5 @@
+import { NgControl } from '@angular/forms';
+import { AppModule } from './../../../../../app.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TextInputComponent } from './text-input.component';
@@ -8,6 +10,7 @@ describe('TextInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [AppModule],
       declarations: [TextInputComponent]
     })
       .compileComponents();

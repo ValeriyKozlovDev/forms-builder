@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { selectFieldsLoading, selectFieldsError } from './../../store/form.selectors';
 import { Store } from '@ngrx/store';
 import {
@@ -18,14 +19,14 @@ import {
 export class ListElementsComponent {
 
   @Input() listElements!: string[]
-  @Output() toDrop = new EventEmitter<any>()
+  @Output() toDrop = new EventEmitter<CdkDragDrop<string[]>>()
 
   fieldsLoading$ = this.store.select(selectFieldsLoading)
   fieldsError$ = this.store.select(selectFieldsError)
 
   constructor(private store: Store) { }
 
-  drop(event: any) {
+  drop(event: CdkDragDrop<string[]>) {
     this.toDrop.emit(event)
   }
 }

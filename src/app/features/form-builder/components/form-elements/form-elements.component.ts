@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { selectSavingLoading, selectSavingError, selectSavingSuccess } from './../../store/form.selectors';
 import { selectUserLogin } from './../../../login/store/auth.selectors';
 import { saveForm } from './../../store/form.actions';
@@ -52,7 +53,7 @@ export class FormElementsComponent implements OnInit, OnDestroy {
 
   @Input() selectedElements!: string[]
   @Input() styles!: FieldsStyles | any
-  @Output() toDrop = new EventEmitter<any>()
+  @Output() toDrop = new EventEmitter<CdkDragDrop<string[]>>()
 
   constructor(private store: Store, private _snackBar: MatSnackBar) { }
 
@@ -95,7 +96,7 @@ export class FormElementsComponent implements OnInit, OnDestroy {
       `${elem.styles.label ? elem.styles.label : viewLabelName(elem.type)}`))
   }
 
-  drop(event: any) {
+  drop(event: CdkDragDrop<string[]>) {
     this.toDrop.emit(event)
   }
 

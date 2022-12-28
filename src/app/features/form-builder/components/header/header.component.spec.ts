@@ -1,5 +1,5 @@
+import { AppModule } from './../../../../app.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -8,9 +8,10 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      imports: [AppModule],
+      declarations: [HeaderComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
