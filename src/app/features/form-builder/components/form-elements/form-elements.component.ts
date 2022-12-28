@@ -93,7 +93,7 @@ export class FormElementsComponent implements OnInit, OnDestroy {
           `${elem.styles.label ? elem.styles.label : viewLabelName(elem.type)}`,
           Validators.required))
     } else this.form.addControl(`${elem.id}`, new FormControl(
-      `${elem.styles.label ? elem.styles.label : viewLabelName(elem.type)}`))
+      `${elem.styles.label ? elem.styles.label : viewLabelName(elem.type)}`, []))
   }
 
   drop(event: CdkDragDrop<string[]>) {

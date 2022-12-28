@@ -40,7 +40,7 @@
               <div *ngIf="item.type === 'checkbox'" class="selected-form__checkbox">
                 <div *ngIf="item.styles.label" class="text text-middle checkbox-label">{{item.styles.label}}</div>
                 <div *ngIf="!item.styles.label" class="text text-middle checkbox-label">Checkbox label</div>
-                <input [ngStyle]="item.styles | style" type="checkbox" id=`check{{i}}` value="option"
+                <input [ngStyle]="(item.styles | style)" type="checkbox" id=`check{{i}}` value="option"
                   formControlName="{{item.id}}">
                 <label *ngIf="item.styles.checkboxOption" for=`check{{i}}`
                   [ngStyle]="item.styles | style">{{item.styles.checkboxOption}}</label>
