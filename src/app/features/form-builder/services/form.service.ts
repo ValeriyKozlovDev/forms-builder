@@ -31,8 +31,6 @@ export class FormService {
   }
 
   saveForm(data: SavedForm): Observable<any> {
-    console.log("a:::", data)
-
     return this.http.post<any>(`${environment.server}savedForms`, {
       userLogin: data.userLogin,
       formStyles: data.formStyles,

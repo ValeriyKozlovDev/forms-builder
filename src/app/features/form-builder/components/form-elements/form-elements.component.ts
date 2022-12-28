@@ -1,4 +1,3 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { selectSavingLoading, selectSavingError, selectSavingSuccess } from './../../store/form.selectors';
 import { selectUserLogin } from './../../../login/store/auth.selectors';
 import { saveForm } from './../../store/form.actions';
@@ -82,7 +81,12 @@ export class FormElementsComponent implements OnInit, OnDestroy {
 
 
   addControl(elem: FormElement) {
-    if (elem.styles.required) {
+    if (elem.styles.required && elem.type === 'checkbox') {
+      this.form.addControl(
+        `${elem.id}`, new FormControl(
+          `${elem.styles.label ? elem.styles.label : viewLabelName(elem.type)}`,
+          Validators.requiredTrue))
+    } else if (elem.styles.required && elem.type != 'checkbox') {
       this.form.addControl(
         `${elem.id}`, new FormControl(
           `${elem.styles.label ? elem.styles.label : viewLabelName(elem.type)}`,
