@@ -1,17 +1,20 @@
-import { AppModule } from './../../../../app.module';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormElement } from './../../store/interfaces';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { FormElementsComponent } from './form-elements.component';
+import { Store } from '@ngrx/store';
 
 describe('FormElementsComponent', () => {
   let component: FormElementsComponent;
   let fixture: ComponentFixture<FormElementsComponent>;
-
+  let store: MockStore<{}>;
+  const initialState = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppModule],
-      declarations: [FormElementsComponent]
+      imports: [],
+      declarations: [FormElementsComponent],
+      providers: [provideMockStore({ initialState }), MatSnackBar]
     })
       .compileComponents();
   });
@@ -20,6 +23,7 @@ describe('FormElementsComponent', () => {
     fixture = TestBed.createComponent(FormElementsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    store = TestBed.get<Store>(Store);
   });
 
   it('should create', () => {
@@ -51,4 +55,17 @@ describe('FormElementsComponent', () => {
 
     expect(input?.valid).toBeTruthy()
   })
+
+  it('should return value and placeholder', () => {
+    let label = component.itemDetails({ id: 0, type: 'checkbox', styles: { label: 'label', placeholder: 'placeholder' } }).value
+    let placeholder = component.itemDetails({ id: 0, type: 'checkbox', styles: { label: 'label', placeholder: 'placeholder' } }).placeholder
+
+    expect(label).toBe('label')
+    expect(placeholder).toBe('placeholder')
+  });
+
+  it('should continue labelName', () => {
+    expect(component.labelName).toBe('Form label');
+  });
 });
+

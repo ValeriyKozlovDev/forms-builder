@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 import { ReplaySubject, tap, takeUntil } from 'rxjs';
 import { selectSelectedStyles } from '../../../store/form.selectors';
 import { BaseField } from 'src/app/shared/directives/base-field.directive';
-import { deepClone } from 'src/app/shared/functions';
+import { deepClone } from 'src/app/shared/pipes/functions/functions';
 
 @Component({
   selector: 'app-selector',

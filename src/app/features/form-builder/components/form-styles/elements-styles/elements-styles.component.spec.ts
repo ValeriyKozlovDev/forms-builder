@@ -1,16 +1,16 @@
-import { AppModule } from './../../../../../app.module';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ElementsStylesComponent } from './elements-styles.component';
 
 describe('ElementsStylesComponent', () => {
   let component: ElementsStylesComponent;
   let fixture: ComponentFixture<ElementsStylesComponent>;
-
+  let store: MockStore<{}>;
+  const initialState = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppModule],
-      declarations: [ElementsStylesComponent]
+      declarations: [ElementsStylesComponent],
+      providers: [provideMockStore({ initialState })]
     })
       .compileComponents();
 

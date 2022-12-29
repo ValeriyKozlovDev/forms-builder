@@ -5,3 +5,5 @@ export function deepClone(str: string | null): string {
 export function viewLabelName(elem: string) {
   return (elem)[0].toUpperCase() + (elem).slice(1) + ' label'
 }
+
+

@@ -1,22 +1,26 @@
-import { AppModule } from './../../../../../app.module';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GeneralFormStylesComponent } from './general-form-styles.component';
+import { Store } from '@ngrx/store';
 
 describe('GeneralFormStylesComponent', () => {
   let component: GeneralFormStylesComponent;
   let fixture: ComponentFixture<GeneralFormStylesComponent>;
 
+  let store: MockStore<{}>;
+  const initialState = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppModule],
-      declarations: [GeneralFormStylesComponent]
+      imports: [],
+      declarations: [GeneralFormStylesComponent],
+      providers: [provideMockStore({ initialState })]
     })
       .compileComponents();
 
     fixture = TestBed.createComponent(GeneralFormStylesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    store = TestBed.get<Store>(Store);
   });
 
   it('should create', () => {

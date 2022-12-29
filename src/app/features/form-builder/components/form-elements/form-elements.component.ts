@@ -23,7 +23,7 @@ import {
 } from '../../store/form.selectors';
 import { selectStyles } from '../../store/form.actions';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { viewLabelName } from 'src/app/shared/functions';
+import { viewLabelName } from 'src/app/shared/pipes/functions/functions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -55,7 +55,7 @@ export class FormElementsComponent implements OnInit, OnDestroy {
   @Input() styles!: FieldsStyles | any
   @Output() toDrop = new EventEmitter<CdkDragDrop<string[]>>()
 
-  constructor(private store: Store, private _snackBar: MatSnackBar) { }
+  constructor(private store: Store, public _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.selectedElement$
