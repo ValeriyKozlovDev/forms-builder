@@ -55,7 +55,7 @@ export class FormElementsComponent implements OnInit, OnDestroy {
   @Input() styles!: FieldsStyles | any
   @Output() toDrop = new EventEmitter<CdkDragDrop<string[]>>()
 
-  constructor(private store: Store, public _snackBar: MatSnackBar) { }
+  constructor(private store: Store, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.selectedElement$

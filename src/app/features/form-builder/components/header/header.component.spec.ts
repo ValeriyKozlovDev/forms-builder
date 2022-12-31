@@ -15,6 +15,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
+      // providers: [AuthService]
       providers: [HeaderComponent, { provide: AuthService, useClass: MockAuthService }]
     })
       .compileComponents();

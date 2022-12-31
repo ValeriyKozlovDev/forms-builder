@@ -1,5 +1,3 @@
-import { NgControl } from '@angular/forms';
-import { AppModule } from './../../../../../app.module';
 import { CheckboxComponent } from './checkbox.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 

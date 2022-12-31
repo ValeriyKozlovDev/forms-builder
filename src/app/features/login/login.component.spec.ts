@@ -1,5 +1,7 @@
+import { selectLoading, selectLoginAgain } from './store/auth.selectors';
+import { State } from './../../store/index';
 import { HttpClient } from '@angular/common/http';
-import { Store } from '@ngrx/store';
+import { Store, MemoizedSelector } from '@ngrx/store';
 import { AppRoutingModule } from './../../app-routing.module';
 import { AuthService } from 'src/app/features/login/services/auth.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -15,20 +17,22 @@ class MockAuthService {
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let store: MockStore<{}>;
-  const initialState = {};
+  let mockLoadingSelector: MemoizedSelector<State, boolean>;
+  let mockLoginAgainSelector: MemoizedSelector<State, boolean>;
+  let mockStore: MockStore<State>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppRoutingModule],
       declarations: [LoginComponent],
-      providers: [LoginComponent, { provide: AuthService, useClass: MockAuthService }, provideMockStore({ initialState })]
+      providers: [LoginComponent, { provide: AuthService, useClass: MockAuthService }, provideMockStore()]
 
     }).compileComponents();
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    store = TestBed.get<Store>(Store);
+    mockStore = TestBed.get(Store);
+
   });
 
   it('should create', () => {
@@ -101,5 +105,19 @@ describe('LoginComponent', () => {
     expect(component.haveAcc).toBeTruthy()
   })
 
+  it('should have value true in loading selector', () => {
+    mockLoadingSelector = mockStore.overrideSelector(selectLoading, false);
+    mockLoadingSelector.setResult(true);
+    mockStore.refreshState();
+    fixture.detectChanges();
+    component.loading$.subscribe((result) => expect(result).toBeTruthy())
+  })
 
+  it('should have value true in loginAgain selector', () => {
+    mockLoginAgainSelector = mockStore.overrideSelector(selectLoginAgain, false);
+    mockLoginAgainSelector.setResult(true);
+    mockStore.refreshState();
+    fixture.detectChanges();
+    component.loginAgain$.subscribe((result) => expect(result).toBe(true))
+  })
 });

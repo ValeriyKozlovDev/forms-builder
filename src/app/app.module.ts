@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { FormBuilderModule } from './features/form-builder/form-builder.module';
 import { LoginModule } from './features/login/login.module';

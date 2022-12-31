@@ -8,7 +8,7 @@ import {
 import { TestBed } from '@angular/core/testing'
 
 
-describe('FormService - testing HTTP request method getData()', () => {
+describe('FormService', () => {
   let httpTestingController: HttpTestingController
   let formService: FormService
   beforeEach(() => {
@@ -95,8 +95,5 @@ describe('FormService - testing HTTP request method getData()', () => {
 
     req.flush(expectedFields)
   })
-
-
-
   afterEach(() => httpTestingController.verify())
 })
