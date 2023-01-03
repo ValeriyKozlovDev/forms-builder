@@ -1,3 +1,4 @@
+import { applyFormStyles } from './../../../store/form.actions';
 import { selectBorderTypes } from './../../../store/form.selectors';
 import { State } from './../../../../../store/index';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
@@ -10,9 +11,9 @@ describe('GeneralFormStylesComponent', () => {
   let fixture: ComponentFixture<GeneralFormStylesComponent>;
   let mockStore: MockStore<State>;
   let mockBorderTypesSelector: MemoizedSelector<State, string[]>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [],
       declarations: [GeneralFormStylesComponent],
       providers: [provideMockStore()]
     })
@@ -56,4 +57,10 @@ describe('GeneralFormStylesComponent', () => {
     component.borderTypes$.subscribe((result) => expect(result).toEqual(['1', '2']))
   })
 
+  it('should call dispatch applyFormStyles with formData', () => {
+    let spy = spyOn(mockStore, 'dispatch')
+    const formData = { ...component.generalForm.value }
+    component.applyFormStyles()
+    expect(spy).toHaveBeenCalledWith(applyFormStyles({ data: formData }))
+  })
 });

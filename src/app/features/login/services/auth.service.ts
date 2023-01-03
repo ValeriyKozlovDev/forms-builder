@@ -1,4 +1,4 @@
-import { setLoading, setUserLogin } from './../store/auth.actions';
+import { setLoading } from './../store/auth.actions';
 import { Store } from '@ngrx/store';
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
@@ -47,7 +47,7 @@ export class AuthService {
     return !!this.token
   }
 
-  private handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse) {
     const { message } = error.error.error
     this.store.dispatch(setLoading({ data: false }))
     switch (message) {

@@ -1,3 +1,4 @@
+import { addSelectOption, applyElementStyles } from './../../../store/form.actions';
 import { selectSelectedStyles, selectBorderTypes, selectBorderTypesLoading, selectBorderTypesError } from './../../../store/form.selectors';
 import { Styles } from './../../../store/interfaces';
 import { State } from './../../../../../store/index';
@@ -64,9 +65,11 @@ describe('ElementsStylesComponent', () => {
     expect(fontWeight?.valid).toBeTruthy()
   })
 
-  it('should set option control as empty string after call addOption()', () => {
+  it('should set option control as empty string after call addOption() and call dispatch addSelectorOption', () => {
     component.elementsForm.value.option = 'option'
+    let spy = spyOn(mockStore, 'dispatch')
     component.addOption()
+    expect(spy).toHaveBeenCalledWith(addSelectOption({ data: 'option' }))
     expect(component.elementsForm.value.option).toBe('')
   })
 
@@ -101,5 +104,18 @@ describe('ElementsStylesComponent', () => {
     mockStore.refreshState();
     fixture.detectChanges();
     component.borderTypesError$.subscribe((result) => expect(result).toBe('error'))
+  })
+
+  it('should call dispatch applyElementStyles with formData', () => {
+    let spy = spyOn(mockStore, 'dispatch')
+    const formData = { ...component.elementsForm.value }
+    component.applyElementsStyles()
+    expect(spy).toHaveBeenCalledWith(applyElementStyles({ data: formData }))
+  })
+
+  it('should call dispatch delete', () => {
+    let spy = spyOn(mockStore, 'dispatch')
+    component.delete()
+    expect(spy).toHaveBeenCalled()
   })
 })

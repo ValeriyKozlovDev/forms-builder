@@ -5,7 +5,8 @@ import {
   Input,
   Self,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  Optional
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -34,11 +35,14 @@ export class TextInputComponent implements ControlValueAccessor, BaseField, OnIn
   private onTouched!: () => void;
 
   constructor(
-    @Self() private readonly ngControl: NgControl,
+    @Optional() @Self() private readonly ngControl: NgControl,
     private readonly changeDetector: ChangeDetectorRef,
     private store: Store
   ) {
-    this.ngControl.valueAccessor = this;
+    if (ngControl) {
+      this.ngControl.valueAccessor = this;
+
+    }
   }
 
   ngOnInit(): void {

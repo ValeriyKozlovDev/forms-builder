@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self, OnInit, OnDestroy, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ReplaySubject, tap, takeUntil } from 'rxjs';
@@ -26,11 +26,13 @@ export class NumberInputComponent implements ControlValueAccessor, BaseField, On
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   constructor(
-    @Self() private readonly ngControl: NgControl,
+    @Optional() @Self() private readonly ngControl: NgControl,
     private readonly changeDetector: ChangeDetectorRef,
     private store: Store
   ) {
-    this.ngControl.valueAccessor = this;
+    if (ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   ngOnInit(): void {

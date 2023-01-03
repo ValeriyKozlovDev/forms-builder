@@ -1,43 +1,34 @@
-import { NgControl, FormControlDirective } from '@angular/forms';
+import { State } from './../../../../../store/index';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TextInputComponent } from './text-input.component';
+import { Store } from '@ngrx/store';
+
+
 
 describe('TextInputComponent', () => {
   let component: TextInputComponent;
   let fixture: ComponentFixture<TextInputComponent>;
+  let mockStore: MockStore<State>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [TextInputComponent],
-      providers: [TextInputComponent, {
-        provide: NgControl,
-        useValue: new FormControlDirective([], [], [], null)
-      }]
+      providers: [provideMockStore()]
     })
       .compileComponents();
-
-    // .overrideComponent(TextInputComponent, {
-    //   set: {
-    //     providers: [
-    //       {
-    //         provide: NgControl,
-    //         useValue: new FormControlDirective([], [], [], null)
-    //       }
-    //     ]
-    //   }
-    // });
 
     fixture = TestBed.createComponent(TextInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
+    mockStore = TestBed.get(Store);
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should create', () => {
+  it('should change value in writeValue method', () => {
     component.writeValue('value')
     expect(component.value).toBe('value');
   });

@@ -1,3 +1,4 @@
+import { saveForm } from './../../store/form.actions';
 import { selectFormStyles, selectSelectedElements, selectSelectedItemId, selectSavingLoading, selectSavingError, selectSavingSuccess } from './../../store/form.selectors';
 import { selectUserLogin } from './../../../login/store/auth.selectors';
 import { State } from './../../../../store/index';
@@ -20,6 +21,7 @@ describe('FormElementsComponent', () => {
   let mockSavingErrorSelector: MemoizedSelector<State, string>;
   let mockSavingSuccessSelector: MemoizedSelector<State, boolean>;
   let mockStore: MockStore<State>;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -151,6 +153,19 @@ describe('FormElementsComponent', () => {
     mockStore.refreshState();
     fixture.detectChanges();
     component.savingSuccess$.subscribe((result) => expect(result).toBeTruthy())
+  })
+
+  it('should call dispatch saveForm with userLogin, formStyles and formElements', () => {
+    let spy = spyOn(mockStore, 'dispatch')
+    let formStyles = {
+      label: '',
+      textColor: '',
+      backgroundColor: '',
+      borderColor: '',
+      borderType: ''
+    }
+    component.saveForm('login', formStyles, [])
+    expect(spy).toHaveBeenCalledWith(saveForm({ userLogin: 'login', formStyles, formElements: [] }))
   })
 });
 
