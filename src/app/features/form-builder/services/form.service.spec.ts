@@ -31,46 +31,7 @@ describe('FormService', () => {
         "id": 1,
         "type": "input",
         "styles": [
-          "label",
-          "placeholder",
-          "width",
-          "height",
-          "font size",
-          "font weight",
-          "color input",
-          "border type",
-          "border color",
-          "required"
-        ]
-      }, {
-        "id": 2,
-        "type": "textarea",
-        "styles": [
-          "label",
-          "placeholder",
-          "width",
-          "height",
-          "font size",
-          "font weight",
-          "color input",
-          "border type",
-          "border color",
-          "required"
-        ]
-      },
-      {
-        "id": 3,
-        "type": "button",
-        "styles": [
-          "label",
-          "width",
-          "height",
-          "font size",
-          "font weight",
-          "color",
-          "border type",
-          "border color",
-          "background color"
+          "label"
         ]
       }];
     formService
@@ -91,7 +52,7 @@ describe('FormService', () => {
     req.flush(expectedFields)
   })
 
-  it('should make request to post border types', () => {
+  it('should make request to post savedForm', () => {
     const post = {
       userLogin: 'login', formStyles: {
         label: '',

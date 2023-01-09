@@ -18,8 +18,8 @@ export class NumberInputComponent implements ControlValueAccessor, BaseField, On
 
   public value: string | undefined;
 
-  private onChange!: (value: string) => void;
-  private onTouched!: () => void;
+  onChange = (value: string) => { };
+  onTouched!: () => void;
 
   selectedStyles$ = this.store.select(selectSelectedStyles)
 

@@ -31,8 +31,8 @@ export class TextInputComponent implements ControlValueAccessor, BaseField, OnIn
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-  private onChange!: (value: string) => void;
-  private onTouched!: () => void;
+  onChange = (value: string) => { };
+  onTouched!: () => void;
 
   constructor(
     @Optional() @Self() private readonly ngControl: NgControl,

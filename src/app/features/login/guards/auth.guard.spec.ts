@@ -41,7 +41,7 @@ describe('AuthGuard', () => {
   });
 
   it('should load instance', () => {
-    expect(guard).toBeTruthy();
+    expect(auth).toBeTruthy();
   });
 
   it('should call canActivate', () => {

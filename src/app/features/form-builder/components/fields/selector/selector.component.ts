@@ -30,8 +30,8 @@ export class SelectorComponent implements ControlValueAccessor, BaseField, OnIni
 
   public value: string | undefined;
 
-  private onChange!: (value: string) => void;
-  private onTouched!: () => void;
+  onChange = (value: string) => { };
+  onTouched!: () => void;
 
   selectedStyles$ = this.store.select(selectSelectedStyles)
 
@@ -59,7 +59,7 @@ export class SelectorComponent implements ControlValueAccessor, BaseField, OnIni
   public onEditorValueChange(event: Event): void {
     const targetSelectElement = event.target as HTMLSpanElement;
     const content = deepClone(targetSelectElement.textContent);
-
+    console.log(event.target)
     this.onChange(content);
   }
 

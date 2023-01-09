@@ -36,7 +36,6 @@ export class AuthService {
       .pipe(
         catchError(this.handleError.bind(this))
       )
-
   }
 
   logout() {

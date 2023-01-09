@@ -6,7 +6,7 @@ import { Store, MemoizedSelector } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { ListElementsComponent } from './list-elements.component';
 
-describe('User Greeting Component', () => {
+describe('ListElements', () => {
   let component: ListElementsComponent;
   let fixture: ComponentFixture<ListElementsComponent>;
   let mockStore: MockStore<State>;

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './features/login/guards/auth.guard';
 
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', loadChildren: () => import('./features/login/login.module').then(module => module.LoginModule) },
   {

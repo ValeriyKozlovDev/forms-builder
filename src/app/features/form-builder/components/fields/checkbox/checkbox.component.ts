@@ -20,8 +20,8 @@ export class CheckboxComponent implements ControlValueAccessor, BaseField, OnIni
 
   selectedStyles$ = this.store.select(selectSelectedStyles)
 
-  private onChange!: (value: boolean) => void;
-  private onTouched!: () => void;
+  onChange = (value: boolean) => { };
+  onTouched!: () => void;
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -47,7 +47,7 @@ export class CheckboxComponent implements ControlValueAccessor, BaseField, OnIni
   public onEditorValueChange(event: Event): void {
     const targetInputElement = event.target as HTMLInputElement;
     const content = targetInputElement.checked;
-
+    console.log(event.target)
     this.onChange(content);
   }
 

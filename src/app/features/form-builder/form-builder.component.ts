@@ -1,3 +1,4 @@
+import { deepClone } from 'src/app/shared/pipes/functions/functions';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Field, Styles, FieldsStyles } from './store/interfaces';
@@ -46,6 +47,7 @@ export class FormBuilderComponent {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

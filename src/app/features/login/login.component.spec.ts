@@ -1,17 +1,38 @@
+import { HttpTestingController } from '@angular/common/http/testing';
+import { Observable, of } from 'rxjs';
+import { setLoading } from './store/auth.actions';
+import { tick } from '@angular/core/testing';
+import { AuthGuard } from './guards/auth.guard';
+import { RouterTestingModule } from '@angular/router/testing';
+import { fakeAsync } from '@angular/core/testing';
+import { User } from './store/interfaces';
 import { selectLoading, selectLoginAgain } from './store/auth.selectors';
 import { State } from './../../store/index';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpErrorResponse } from '@angular/common/http';
 import { Store, MemoizedSelector } from '@ngrx/store';
-import { AppRoutingModule } from './../../app-routing.module';
+import { AppRoutingModule, routes } from './../../app-routing.module';
 import { AuthService } from 'src/app/features/login/services/auth.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { LoginModule } from './login.module';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 class MockAuthService {
-  create = true;
+  canActivate() { return true }
+  isAuthenticated() { return true }
+  logout() { }
+  login() { return of(true) }
+  signIn(user: User) { }
+  create(user: User): Observable<any> { return of() }
 }
+
+// class MockAuthGuard {
+//   canActivate() { return true }
+// }
 
 
 describe('LoginComponent', () => {
@@ -20,19 +41,31 @@ describe('LoginComponent', () => {
   let mockLoadingSelector: MemoizedSelector<State, boolean>;
   let mockLoginAgainSelector: MemoizedSelector<State, boolean>;
   let mockStore: MockStore<State>;
-
+  let auth: AuthService
+  const user: User = {
+    email: 'email@gmail.com',
+    password: 'password',
+  }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppRoutingModule],
+      imports: [AppRoutingModule, RouterTestingModule.withRoutes(routes)],
       declarations: [LoginComponent],
-      providers: [LoginComponent, { provide: AuthService, useClass: MockAuthService }, provideMockStore()]
+      providers: [
+        AuthGuard,
+        HttpClient,
+        HttpHandler,
+        { provide: AuthService, useClass: MockAuthService },
+        provideMockStore(),
+
+      ],
+      teardown: { destroyAfterEach: false }
 
     }).compileComponents();
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     mockStore = TestBed.get(Store);
-
+    auth = TestBed.inject(AuthService);
   });
 
   it('should create', () => {
@@ -119,5 +152,62 @@ describe('LoginComponent', () => {
     mockStore.refreshState();
     fixture.detectChanges();
     component.loginAgain$.subscribe((result) => expect(result).toBe(true))
+  })
+
+  it('should make dispatch in signIn() if have response from auth.login', () => {
+    let spyDispatch = spyOn(mockStore, 'dispatch')
+    component.signIn(user)
+    auth
+      .login(user)
+      .subscribe((response) => expect(spyDispatch).toHaveBeenCalledWith(setLoading({ data: false })))
+  })
+
+  it('should make submitted falsy in signIn() if have error from auth.login', () => {
+    component.submitted = true
+    component.signIn(user)
+    auth.login(user).subscribe(
+      (response) => { },
+      (err) => {
+        expect(component.submitted).toBeFalsy()
+      }
+    )
+  })
+
+  it('should make dispatch setLoading() with { data: true } if formGroup valid', () => {
+    let spyDispatch = spyOn(mockStore, 'dispatch')
+    let email = component.formGroup.get('email')
+    email?.setValue('email@gmail.com')
+    let password = component.formGroup.get('password')
+    password?.setValue('123456')
+    component.onSubmit()
+    expect(spyDispatch).toHaveBeenCalledWith(setLoading({ data: true }))
+  })
+
+  it('should return false in formGroup invalid', () => {
+    component.onSubmit()
+    expect(component.onSubmit()).toBeFalsy()
+  })
+
+  it('should call signIn method if formGroup valid and haveAcc false', () => {
+    let spySignIn = spyOn(component, 'signIn')
+    component.haveAcc = false
+    let email = component.formGroup.get('email')
+    email?.setValue('email@gmail.com')
+    let password = component.formGroup.get('password')
+    password?.setValue('123456')
+    component.onSubmit()
+    auth.create(user).subscribe(() => expect(spySignIn).toHaveBeenCalledWith(user))
+  })
+
+  it('should call dispatch setLoading with { data: true } if formGroup valid and haveAcc false', () => {
+    let spyDispatch = spyOn(mockStore, 'dispatch')
+    component.haveAcc = false
+    let email = component.formGroup.get('email')
+    email?.setValue('email@gmail.com')
+    let password = component.formGroup.get('password')
+    password?.setValue('123456')
+    component.onSubmit()
+    auth.create(user).subscribe((response) => expect(spyDispatch).toHaveBeenCalledWith(setLoading({ data: true }))
+    )
   })
 });

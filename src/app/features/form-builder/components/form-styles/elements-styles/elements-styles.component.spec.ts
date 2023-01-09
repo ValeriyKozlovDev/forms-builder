@@ -74,7 +74,6 @@ describe('ElementsStylesComponent', () => {
   })
 
   it('should have value ["1", "2"] in SelectedStyles selector', () => {
-    let styles!: Styles
     mockSelectedStylesSelector = mockStore.overrideSelector(selectSelectedStyles, []);
     mockSelectedStylesSelector.setResult(['1', '2']);
     mockStore.refreshState();

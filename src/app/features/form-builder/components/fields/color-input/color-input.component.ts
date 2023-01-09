@@ -20,8 +20,8 @@ export class ColorInputComponent implements ControlValueAccessor, BaseField, OnI
 
   selectedStyles$ = this.store.select(selectSelectedStyles)
 
-  private onChange!: (value: string) => void;
-  private onTouched!: () => void;
+  onChange = (value: string) => { };
+  onTouched!: () => void;
 
   destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
 

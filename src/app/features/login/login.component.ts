@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs';
 import { Component, Input, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ReplaySubject, takeUntil } from 'rxjs';
@@ -20,7 +19,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   haveAcc = true
   formGroup!: FormGroup;
   submitted = false
-  message!: string
 
   @Input() formError = '';
 
@@ -30,7 +28,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     public auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
     private store: Store
   ) { }
 
@@ -38,12 +35,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.route.queryParams.pipe(takeUntil(this.destroy)).subscribe((params: Params) => {
-      if (params['authFailed']) {
-        this.message = 'session is over, please sign in again'
-      }
-    })
-
     this.formGroup = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
